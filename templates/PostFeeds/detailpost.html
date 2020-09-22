@@ -1,0 +1,220 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load extras %}
+
+{% block css %}
+{% if user.is_association%}
+    <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+    <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+    
+{% endblock css %}
+
+{% block content %}
+
+{% comment %} Menu {% endcomment %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+    <br><br>
+    <div class="container">
+        <div class="row">
+        {% comment %} First Section {% endcomment %}
+            <div class="col-md-2"></div>
+        {% comment %} Second Section {% endcomment %}
+            <div class="col-md-8">
+                {% comment %} Article {% endcomment %}
+                <div class="card feseul_card post_div" id="{{post.id}}">
+                    <H5 class="card-header">
+                        {% if post.author.is_student %}
+                        <img class="rounded-circle border border-warning d-inline" src="{{ post.author.profile.thumbnail.url }} " alt="user" width="50px" height="50px">
+                      {% elif post.author.is_company %}
+                        <img class="rounded-circle border border-warning d-inline" src="{{ post.author.page.thumbnail.url }} " alt="user" width="50px" height="50px">
+    
+                      {% elif post.author.is_association %}
+                        <img class="rounded-circle border border-warning d-inline" src="{{ post.author.association.thumbnail.url }} " alt="user" width="50px" height="50px">
+    
+                      {% endif %}
+                            {{post.author}} <small class="text-muted"> {{post.timestamp|timesince}} </small></H5>
+                    
+                    <img class="card-img" src="{{post.thumbnail.url}}" alt="image">
+                    <div class="card-body">
+                        <p></p>
+                        <p class="card-text"> {{post.contenu}} </p>
+
+                        {% if request.user == post.author %}
+                            <a class="btn btn-danger ml-3 delete" href=" {% url 'delpost' post.id %} " id="{{post.id}}">Delete</a>
+                        {% endif %}
+                    </div>
+
+                <div class="card-footer text-muted text-center">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="float-left d-inline  ml-2">{{post.timestamp.date}}</p>
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                        <p class="float-right d-inline mr-2 total"  >
+                            <a role="button" class="btn btn-warning mx-2" href="{{post.get_absolute_url}}">
+                                Commentaires ( {{ total_comments.count}} )
+                            </a>
+                        </p>
+                        
+                    </div>
+                    
+                    <div class="col-md-2 ">
+                        <p class="text-center d-inline ml-2 " >
+                            {% if request.user.is_authenticated %}
+                                <div id="like-section">
+                                    {% include 'partials/_like.html'%}
+                                </div>
+                            {% else %}
+                                <p class="text-center d-inline ml-2"> 
+                                    <button disabled="disabled"  value = " {{ i.id}} " class="btn btn-primary " >Aimer</button> 
+                                </p>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p class="float-right d-inline total"  >
+                            Likes ({{post.likes.count}})
+                        </p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p class="float-right d-inline total"  >
+                            Vue(s) ({{post.views}})
+                        </p>
+                    </div>
+                </div>          
+              </div>
+            </div>
+
+            {% comment %} Section pour commentaire {% endcomment %}
+            <!-- <div class="main-comment-section">
+              
+            </div>  -->
+
+            <hr>
+
+            {% for comment in comments %}
+
+            <div class="row my-4">
+                <div class="col-md-2 ">
+                    {% if  comment.user.is_student %}
+                        <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.profile.thumbnail.url}} " 
+                        alt="{{comment.user.username}}" style="width: 70px; height: 70px">
+                    {% elif  comment.user.is_company %}
+                        <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.page.thumbnail.url}} " 
+                        alt="{{comment.user.username}}" style="width: 70px; height: 70px">    
+                    {% elif  comment.user.is_association %}
+                        <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.association.thumbnail.url}} " 
+                        alt="{{comment.user.username}}" style="width: 70px; height: 70px">   
+                    {% endif %}
+                </div>
+                <div class="col-md-10 mt-3">
+                    <b> {{comment.user.username}} </b>
+                        <span class="badge badge-secondary">
+                            Depuis {{comment.timestamp|timesince}} 
+                        </span>
+                    <div class=""> {{comment.comment}} </div>
+
+                    <div class="reply mx-0">
+                    
+                       <a class="text-secondary" data-toggle="collapse" href="#repondre{{comment.id}}" role="button" 
+                        aria-expanded="false" aria-controls="repondre{{comment.id}}">
+                            <small>Repondre</small>
+                        </a>
+                
+                        <div class="collapse" id="repondre{{comment.id}}">
+                            <div class="card card-body my-2">
+                                <form action=" {% url 'feseulComment' %} " method="POST" class="form-inline ">
+                                    {% csrf_token %}
+                                    <div class="form-group my-2 ">
+                                        <textarea  class="form-control" name="comment" id="" cols="60" rows="1" placeholder="Repondre..."></textarea>
+                                        <!-- <input type="text" class="form-control"  name="comment" placeholder="Repondre..."> -->
+                                        <input type="hidden" name="parentId" value="{{comment.id}}">
+                                    </div>
+                                    <input type="hidden" name="postId" value=" {{post.id}} ">
+                                    <button type="submit" class="btn btn-primary btn-sm m-2 " id="btnRepondre">Repondre</button>
+                                  </form>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="replies my-2" id="replies"  >
+                    {% for reply in replyDict|get_val:comment.id %}
+                                    <div class="row" >
+                                        
+                                        <div class="col-md-2 ">
+                                            <img class="rounded-circle mx-auto w-75 d-block p-2" src="{{reply.user.profile.thumbnail.url}} " 
+                                            alt="{{reply.user.username}}" style="width: 60px; height: 60px">
+                                        </div>
+                                        <div class="col-md-10 mt-3">
+                                            <b> {{reply.user.username}} </b>
+                                                <span class="badge badge-secondary">
+                                                    Depuis {{reply.timestamp|timesince}} 
+                                                </span>
+                                            <div class=""> {{reply.comment}} </div>
+                                        </div>
+    
+                                    </div>
+                                    <!-- {{ reply }} -->
+                                {% endfor %}
+                            </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <hr>
+            
+            <form action=" {% url 'feseulComment' %} " method="POST" class="form-inline ">
+                {% csrf_token %}
+                <div class="form-group my-2 ">
+                    <textarea  class="form-control" name="comment" id="" cols="80" rows="1" placeholder="Commentaire..."></textarea>
+                    <!-- <input type="text" class="form-control"  name="comment" placeholder="Commentaire..."> -->
+                </div>
+                <input type="hidden" name="parentId" value="">
+                <input type="hidden" name="postId" value="{{post.id}}">
+                <button type="submit" class="btn btn-primary m-2 ">Comment </button>
+              </form>
+            
+              <hr>
+        </div>
+
+
+
+
+
+
+    {% comment %} Third Section {% endcomment %}
+    <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock content %}
+<!-- block for The Script -->
+{% block script %} 
+  {% comment %} <script src="{% static 'JS/likeAjax.js' %}  "></script>    {% endcomment %}
+  <script src="{% static 'JS/detailpost.js' %}  "></script> 
+{% endblock script %}
+
+
+
+

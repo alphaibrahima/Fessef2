@@ -1,0 +1,127 @@
+.zone
+{
+    display: flex;
+    margin: 0;
+    height: 100px;
+    background-color: #DC3545;
+}
+
+
+.main-nav
+{
+    display: flex;
+    list-style: none;
+    /* font-size: 0.9em; */
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+li{
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.navtext{
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    
+    /* font-weight: bold; */
+}
+
+
+a:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.zone img
+{
+    
+}
+
+
+h4
+{
+    padding: 30px;
+    color: #fff;
+    margin-left: 10px; 
+    text-transform: uppercase;
+}
+
+.dropdown-item
+{
+    text-transform: none;
+    font-weight: normal;
+}
+
+.username
+{
+    color: #fff;
+}
+
+.username:hover
+{
+    color: #fff;
+}
+
+
+/* Barre de recherche */
+
+.search-box
+{
+    /* transform: translate(-50%, -50%); */
+    background: #2f3640;
+    
+    border-radius: 40px;
+    /* padding: 10px; */
+    margin-top: 25px;
+}
+
+.search-txt
+{
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: red;
+    font-size: 16px;
+    
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+}
+
+.search-box:hover > .search-txt
+{
+    width: 240px;
+    border-radius: 40px;
+    background: #fff;
+    padding: 0 10px;
+    height: 40px;
+}
+
+.search-box:hover > .search-btn
+{
+   background-color: #fff;
+   color: #e84118;
+   margin-left: -40px;
+}
+
+/* Boutton  */
+.search-btn
+{
+    color: #e84118;
+    float: right;
+    width: 40px;
+    height: 40px;
+    /* padding: 10px; */
+    border-radius: 50%;
+    background: #fcfcfc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 40px; */
+    transition: 0.4s;
+}

@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    {% if user.is_association%}
+        <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+{% block content %}
+
+{% comment %} Menu {% endcomment %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if posts.count == 1 %}
+                    <h4 class="card-title text-center text-dark" >Resultat</h4>
+                  {% else %}
+                    <h4 class="card-title text-center text-dark" >Resultat(s)</h4>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-2"></div>
+        
+
+        <div class="col-md-8 mt-4 mb-4">
+
+            {% for i in posts %}
+            <div class="card mb-3  mb-4 " id="{{i.id}}" >
+                <div class="card-header" style="height: 55px; padding : 5px">
+                    {% if i.author.is_student %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
+                  {% elif i.author.is_company %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.page.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+                  {% elif i.author.is_association %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.association.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+                  {% endif %}
+                    <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
+                 
+                    <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h fa-2x mt-2 text-secondary "></i></a>  
+                    <a href=""></a>
+                    <!-- debut du list dropdown -->
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if request.user == i.author %}
+                        <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">Delete</a>
+                    {% endif %}   
+                        <a class="dropdown-item" href="#">Signalez</a>
+                        
+                    </div>
+                        
+                    <!-- fin du list -->
+                    <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
+                </div>
+
+                {% if i.thumbnail.url %}
+                <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg" alt="fesseul image">
+                {% endif %}
+                <div class="card-body">
+                  <p class="card-text">{{i.contenu}}</p>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <p class="text-left ml-2">{{i.timestamp.date}}
+                    <a href="{{i.get_absolute_url}}" class="float-right mr-2" href="">Voir plus...</a></p>
+                  </div>
+              </div>
+
+            {% endfor%}
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+{% block script %}
+{% endblock script %}

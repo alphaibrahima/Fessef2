@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+{% load static %} 
+{% block css %}
+    {% if user.is_association%}
+        <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+
+<div class="container-fluid ">
+    <div class="row my-2">
+        <div class="col-md-2"></div>
+    
+        <div class="col-md-8 m-4">
+
+            <div class="card " id="{{i.id}}">
+            {% if post.thumbnail %}
+                <img src="{{ post.thumbnail.url }}" class="card-img-top img-fluid card-infoImgg" alt="...">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title text-center"><a class="text-dark" href="" >
+                <strong>{{ post.title }}</strong>
+                </a></h5>
+                <p class="text-center text-muted">Depuis {{post.timestamp|timesince}}</p>
+                <p class="card-text">{{ post.contenu|safe }}</p>
+            </div>
+            {% if request.user == post.author %}
+            <ul class="list-group list-group-flush text-center">
+                <li class="list-group-item">
+                    <a href="{% url 'updatexamxam' post.pk %}" class="float-left d-inline ml-2 text-warning">
+                        Modifier
+                    </a>
+                    <a href="{% url 'delxamxam' post.id %}" class="float-right d-inline mr-2 text-danger delete" id="{{i.id}}">
+                        Suprimer
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+            <div class="card-footer text-muted text-center">
+
+                <p class="float-left d-inline  ml-2">
+                    <b>
+                    {{ post.author }}
+                    </b>
+                </p>
+                <p class="text-center d-inline ml-2">
+                    <a class="text-muted" href=" # ">
+                        Vue ({{ post.views }})
+                    </a>
+                </p>
+                <p class="float-right d-inline mr-2" >
+
+                </p>
+            </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+</div>
+</div>
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'JS/postfeeds.js' %}  "></script>
+{% endblock script %}

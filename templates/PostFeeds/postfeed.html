@@ -1,0 +1,266 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'CSS/postfeeds.css' %}">
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% comment %} Menu {% endcomment %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+
+<br>
+
+<div class="container-fluid  mb-5 ">
+    <div class="row d-flex ">
+
+        <div class="col-md-3 mb-2">
+
+          {% if user.is_student %}
+          <div class="card raduis-card mb-2" >
+            <div class="card-body bg-danger" style="height : 100px;background-color: #FF0000;"></div>
+            <div class="card-body m-auto">
+            <img  src=" {{ user.profile.thumbnail.url }} " class="rounded-circle shadow-sm" alt="image"  width="150" 
+              height="150" style="margin-top: -90px; ">
+            </div>
+            <!-- <div class="card-body" style="height : 100px;"></div> -->
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center">
+                  <h5 class="card-title">{{user.username}}</h5>
+                </li>
+              </ul>
+              <div class="card-body text-center">
+                <a class=" btn btn-warning" href="{% url 'profile' %}">Voir Profile</a>
+              </div>
+          </div>
+
+          <div class="card dCard mb-2" >
+            
+            <!-- <div class="card-body" style="height : 100px;"></div> -->
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center">
+                  <h5 class="card-title">Document <br> <small class="text-muted">Important</small></h5>
+                </li>
+              </ul>
+              <div class="card-body text-center">
+                <a class=" btn btn-warning mr-2" data-toggle="modal" data-target="#lettreM">
+                  Lettre Motivation
+                </a>
+                <a class=" btn btn-warning margin-d" data-toggle="modal" data-target="#cvPdf">
+                  Le Cv 
+                </a>
+              </div>
+
+          </div>
+
+          <!-- modal CV-->
+          <div class="modal fade" id="cvPdf" tabindex="-1" aria-labelledby="cvLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="cvLabel">Curriculum vitæ de @{{ user.username}}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    {% if user.profile.cv %}
+                        <iframe src="{{user.profile.cv.url }}" width="100%" height="600px">     
+                      </iframe>
+                      {% endif %}   
+                </div>
+              </div>
+            </div>
+         </div>
+        <!-- fin modal CV-->
+
+          <!-- modal LM-->
+          <div class="modal fade" id="lettreM" tabindex="-1" aria-labelledby="lettreMLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="lettreMLabel">Lettre de motivation de @{{user.username}} </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% if user.profile.lettre_motivation %}
+                    <iframe src="{{  user.profile.lettre_motivation.url }}" width="100%" height="600px">
+                    </iframe>
+                  {% endif %} 
+              </div>
+            </div>
+          </div>
+          <!-- fin modal LM-->
+          {% else %}
+
+          <!-- Debut Du Formulaire De Recherche -->
+
+          <form action="{% url 'search_post' %}" class="mt-4">
+                <input type="search" name="search" class="form-control my-1" id="" 
+                    placeholder="Recherche">
+                <button type="submit" class="btn btn-danger">Recherche</button>
+          </form>
+                        
+          
+          <!-- Fin Du Formulaire De Recherche -->
+
+          {% endif %}
+          
+        </div>
+
+
+
+        <div class="col-md-6">
+
+        <!-- modal -->
+
+          <button type="button" class="btn btn-danger  mb-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+            Fesseul
+          </button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Partagez</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'feseul' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <div class="custom-file">
+                          <input type="file" name="image" class="custom-file-input" id="image" >
+                          <label class="custom-file-label" for="image">Image :  </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="textarea">Contenu : </label>
+                      <textarea class="form-control form-control" name="text" id="textarea" cols="30" rows="3" placeholder="Partagez votre sensation"></textarea>
+                  </div>
+                   
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Feseul</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+        
+          <!-- modal -->
+
+
+            {% for i in posts %}
+            <div class="card mb-3" id="{{i.id}}" >
+                <div class="card-header" style="height: 55px; padding : 5px">
+                  {% if i.author.is_student %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
+                  {% elif i.author.is_company %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.page.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+                  {% elif i.author.is_association %}
+                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.association.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+                  {% endif %}
+                  <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
+                       
+                  <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h fa-2x mt-2 text-secondary "></i></a>  
+                  <!-- debut du list dropdown -->
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if request.user == i.author %}
+                      <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">
+                        Delete
+                      </a>
+                    {% elif request.user != i.author %}
+                      <a class="dropdown-item" href="#">
+                        Signalez
+                      </a>
+                    {% endif %}
+                  </div>
+                        
+                  <!-- fin du list -->
+                  <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
+                </div>
+
+                {% if i.thumbnail %}
+                <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg" alt="fesseul image">
+                {% endif %}
+                <div class="card-body">
+                  <p class="card-text">{{i.contenu}}</p>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <p class="text-left ml-2">{{i.timestamp.date}} 
+                    <a href="{{i.get_absolute_url}}" class="float-right mr-2 text-primary" href="">Voir plus...</a></p>
+                  </div>
+              </div>
+              {% endfor %}
+        </div>
+
+
+        <div class="col-md-3 mt-4">
+          <div class="card mr-4 mb-3 mt-4">
+            <div class="card-body">
+              <h5 class="card-title text-center"> <b> Annonces </b></h5>
+            </div>
+          </div>
+          {% for post in postss|slice:":3"  %}
+            <div class="card mr-4 mb-3" >
+                <div class="row no-gutters">
+                  <div class="col-md-5">
+                    <img src="{{ post.img_une.url }}" class="card-img pimg" alt="..." style="width: 100%; height : 100%;">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body">
+                      <a class="text-dark" href="{% url 'annonce-datail'  post.pk %}" >
+                      <h5 class="card-title">{{ post.title}}</h5>
+                    </a>
+                      <p class="card-text">
+                        {{ post.body|slice:":40"|safe }}<a class="text-dark" href="{% url 'annonce-datail'  post.pk %}" >...
+                        </a>
+                      </p>
+                      <p class="card-text" style="font-size: 13px;">
+                        <small class="text-muted">
+                          Depuis {{post.timestamp|timesince}}
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
+{% comment %} tous ce qui java script ou lien vers une app java script {% endcomment %}
+{% block script %}
+<script src="{% static 'JS/postfeeds.js' %}  "></script>
+{% endblock script %}

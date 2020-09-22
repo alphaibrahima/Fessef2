@@ -1,0 +1,199 @@
+{% extends "base/base.html" %}
+{% load static %} 
+
+{% block css %}
+<link href="{% static 'CSS/etudiant.css' %}" rel="stylesheet" type="text/css">
+
+<style>
+
+  .sociauLi
+  {
+    background-color: #FF0000;
+    color: #fff;
+    margin: 5px;
+    width: 100px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out
+    
+  }
+
+  .sociauLi:hover
+  {
+    background-color: transparent;
+    border: 1px solid #FF0000;
+    color: #FF0000;
+
+  }
+
+  .sociaux
+  {
+    margin: 5px;
+    padding: 2px;
+    font-size: 25px;
+  }
+
+
+</style>
+{% endblock css %}
+
+
+{% block content %}
+
+  
+  {% comment %} 
+  <div class="row mt-4">
+
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+
+          <div class="card" >
+            <img src="https://www.fessef.fr/img/logo.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-titlte text-muted">Se connecter.</h5>
+              <a href="" class="btn btn-primary btn-block"> <i class="fa fa-facebook"></i> Login with facebook</a>
+
+              <!-- la section de # ou # -->
+              <div class="row">
+                <div class="col-md-5">
+                  <hr>
+                </div>
+                <div class="col-md-2">
+                  OU
+                </div>
+                <div class="col-md-5">
+                  <hr>
+                </div>
+              </div>
+
+              <!-- les messages d'erreurs -->
+
+                  {% include  'partials/_flash_messages.html'%}
+
+              <!-- section du formulaire -->
+              <form action=" {% url 'login' %} " method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                  <input class="form-control form-control-sm" type="text" name="Nom D'utilisateur" value=" {{ data.username }} " placeholder="Username">
+                </div>
+
+
+                <div class="form-group">
+                  <input class="form-control form-control-sm" type="password" name="password" value="" placeholder="Password">
+                </div>
+
+                <input type="submit" value="Se connecter" class="btn btn-block btn-primary">
+
+              </form>
+
+
+            </div>
+          </div>
+
+          <!-- deuxieme section card -->
+          <div class="card mt-4">
+            <div class="card-body">
+              <p>
+                Vous n'avez pas un compte ? <a href=" {% url 'register' %} ">S'inscrire</a>
+              </p>
+            </div>
+          </div>
+
+          
+
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+
+    </div>
+    <div class="col-md-3"></div>
+  </div>  {% endcomment %}
+
+    <section class="fxt-template-animation fxt-template-layout2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 fxt-bg-color">
+                    <div class="fxt-content">
+                        <div class="fxt-header">
+                            <a href="#" class="fxt-logo"><img src="https://www.fessef.fr/img/logo.jpg" alt="Fessef"></a>
+                              <ul class="fxt-socials d-flex justify-content-center  mt-2">
+                                  <li class="fxt-google">
+                                    <a href="#" class="sociauLi" title="google">
+                                      <i class="fa fa-google sociaux" aria-hidden="true"></i>
+                                    </a>
+                                  </li>                                    
+                                  <li class="fxt-twitter" >
+                                    <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}" class="sociauLi" title="twitter">
+                                      <i class="fab fa-twitter sociaux"></i>
+                                    </a>
+                                  </li>
+                                  <li class="fxt-facebook" >
+                                    <a href="{% url 'social:begin' 'facebook' %}" class="sociauLi" title="Facebook">
+                                      <i class="fab fa-facebook-f sociaux"></i>
+                                    </a>
+                                  </li>                                    
+                              </ul>
+                            <div class="fxt-style-line">
+                                <h2>
+                                  <b>Ou</b>
+                                </h2> 
+                            </div>
+                        </div>
+                        <!-- les messages d'erreurs -->
+
+                        {% include  'partials/_flash_messages.html'%}
+                        <div class="fxt-form">                               
+                            <form action=" {% url 'login' %} "  method="POST">
+                            {% csrf_token %}
+                                <div class="form-group">                                                
+                                    <div class="fxt-transformY-50 fxt-transition-delay-1">                                                
+                                        <input type="text" class="form-control"  name="username" value="{{data.username}}" placeholder="Nom d'utilisateur"required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">                                                
+                                    <div class="fxt-transformY-50 fxt-transition-delay-2">                                                
+                                        <input type="password" class="form-control" name="password" value="" placeholder="Mots de passe" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-3">
+                                            <a href=" {% url 'request-reset-email' %} " class="switcher-text text-danger">Mots de passe oublié</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        <button type="submit" class="fxt-btn-fill ">Se connecter</button>
+                                    </div>
+                                </div>
+                            </form>                   
+                        </div> 
+                        <div class="fxt-footer">
+                            <div class="fxt-transformY-50 fxt-transition-delay-5">
+                                <p>Vous n'avez pas un compte ?<a href=" {% url 'register' %} " class="switcher-text text-danger">S'inscrire</a></p>
+                            </div>                             
+                        </div>                             
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 fxt-none-991 fxt-bg-img" data-bg-image="{% static 'IMG/studentsRegister.jpg' %}"></div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}
+
+{% block script %}  
+ <script src="{% static 'JS/imagesloaded.pkgd.min.js' %}  "></script> 
+ <script src="{% static 'JS/validator.min.js' %}  "></script> 
+ <script src="{% static 'JS/etudiant.js' %}  "></script> 
+{% endblock script %}

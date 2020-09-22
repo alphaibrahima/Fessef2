@@ -1,0 +1,353 @@
+{% extends "base/base.html" %}
+{% load static %} 
+{% block css %}
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link href="{% static 'CSS/profile.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}"> -->
+{% endblock css %}
+
+{% block content %}
+{% comment %} Menu {% endcomment %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+
+{% include  'partials/_flash_messages.html'%}
+
+    <div class="container">
+        <div class="row ">
+            <!-- debut du section à 6 col -->
+            <!-- la class qui contient bgurl dans le css de profile.css "main" -->
+            <div class="col-md-8 mt-2 ">
+
+                <div class="card mb-3">
+                    <div id="container-img">
+                        <img src="{% static 'IMG/background.jpeg' %}" class="card-img-top img-fluid" alt="">
+                    </div>
+                    <p class="text-center">
+                        <img  src="{{user.association.thumbnail.url}}" 
+                        alt="image"  width="100" height="100" class="shadow-sm img_associ">
+                        
+                    </p>
+                    <div class="card-body body-card">
+                        <h5 class="card-title">{{user.username}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+                    </div>
+
+                    <div class="card-footer text-muted ">
+                        
+                        <ul class="nav nav-tabs " id="pills-tab" role="tablist">
+                            <li class="nav-item " role="presentation">
+                              <a class="nav-link text-danger active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-binoculars" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z"/>
+                                </svg>
+                              </a>
+                            </li>
+                            <li class="nav-item " role="presentation">
+                              <a class="nav-link text-danger" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M1 2.828v9.923c.918-.35 2.107-.692 3.287-.81 1.094-.111 2.278-.039 3.213.492V2.687c-.654-.689-1.782-.886-3.112-.752-1.234.124-2.503.523-3.388.893zm7.5-.141v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.811V2.828c-.885-.37-2.154-.769-3.388-.893-1.33-.134-2.458.063-3.112.752zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                                </svg>
+                              </a>
+                            </li>
+                            <li class="nav-item " role="presentation">
+                              <a class="nav-link text-danger" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bookmark-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                    <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                              </a>
+                            </li>
+                          </ul>
+
+                    </div>
+                </div>
+                <!-- debut du tab content -->
+                <div class="tab-content" id="pills-tabContent">
+                    <!--Debut  table 1 -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        
+                        {% for i in postall %}
+                        <div class="card mb-3 mt-4" id="{{i.id}}" >
+                            <div class="card-header" style="height: 55px; padding : 5px">
+                                    {% if i.author.is_company %}
+                                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.page.thumbnail.url }} " 
+                                    alt="user" width="40px" height="40px">
+                                    {% elif i.author.is_association %}
+                                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.association.thumbnail.url }} " 
+                                    alt="user" width="40px" height="40px">
+                                    {% endif %}
+                                    <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
+                                   
+                                    <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h mt-3 text-secondary "></i></a>  
+                                    <!-- debut du list dropdown -->
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item text-danger  delete" href="{% url 'delete-annonce'  i.pk %}" id="{{i.id}}">Delete</a>
+                                    </div>
+                                    
+                                    <!-- fin du list -->
+                                    <p style="margin-top: -20px;">
+                                      <small class="text-muted ml-5" >
+                                        {{i.timestamp|timesince}}
+                                      </small> 
+                                    </p>      
+                            </div>
+            
+                            
+                            {% if i.img_une %}
+                            <img src="{{i.img_une.url}}" class="card-img-top img-fluid card-infoImg" alt="...">
+                            {% endif %}
+                            <div class="card-body">
+                              <h5 class="card-title float-left">{{i.title}}</h5>  
+                              <p class="card-text">{{i.contenu}}</p>
+                            </div>
+                            <div class="card-footer text-muted text-center">
+                                <p class="float-left d-inline  ml-2">{{i.timestamp.date}}</p>
+                                <p class="text-center d-inline ml-2">
+                                  <a href="{% url 'annonce-datail'  i.pk %}" class="text-primary" >
+                                    Voir plus...
+                                  </a>
+                                </p>
+                                <p class="float-right d-inline mr-2" >{{i.likes.count}}</p>
+                              </div>
+                          </div>
+                          {% endfor %}   
+                    </div>
+                    <!-- Fin table 1 -->
+
+                    <!-- Debut table 2 -->
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                      
+
+                      <div class="card my-2">
+                        <div class="card-body text-center">
+                          <h3>Mes Annonces</h3> 
+                        </div>
+                      </div>
+                      
+                      {% for i in posts %}
+                        <div class="card mb-3 " >
+                            <div class="row no-gutters">
+                              <div class="col-md-5">
+                                {% if i.img_une %}
+                                <img src="{{i.img_une.url}}" class="card-img" alt="annonce-job"
+                                style="width: 100%; height : 100%">
+                                {% endif %}
+                              </div>
+                              <div class="col-md-7">
+                                <div class="card-body">
+                                  <a href="{% url 'annonce-datail'  i.pk %}" class="text-primary" >
+                                    <h5 class="card-title text-dark">{{ i.title }}</h5>
+                                  </a>
+                                  <p class="card-text">{{ i.body|slice:":150"|safe }}
+                                    <a href="{% url 'annonce-datail'  i.pk %}" class="text-dark" >...</a></p>
+                                  <p class="card-text"><small class="text-muted">Depuis {{i.timestamp|timesince}}</small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}   
+                    </div>
+                    <!-- Fin table 2 -->
+
+                    <!-- Debut table 3 -->
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"> 
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title text-center">Profils</h3>
+                            </div>
+                          </div>
+
+                          {% for i in posts%}
+                          <div class="card m-2">
+                            {% if i.img_une %}
+                            <img src="{{i.img_une.url}}" class="card-img img-fluid pimg" alt="annonce-job"
+                            style="width: 100%; height : 150px">
+                            {% endif %}
+                            <div class="card-body">
+                              <h5>Titre : {{i.title}}</h5>
+                              <p>
+                                <a href="{% url 'annonce-datail'  i.pk %}" class="text-dark" >
+                                  Nombre de d'interet : {{i.likes.count}} 
+                              </a>
+                              </p>
+
+                              <!-- images des personnes qui sont interreset -->
+
+                              {% for user in  i.likes.all %}
+                                    <div class="row">
+                                        <div class="col-md-4 text-center">
+                                            <img src="{{user.profile.thumbnail.url}}" class="card-img img-fluid " alt="annonce-job"
+                                            style="width: 50px; height : 50px; border-radius : 50%; 
+                                              margin-bottom:3px;">
+                                            <p>
+                                                <a class=" btn btn-sm btn-danger text-white"  data-toggle="modal" data-target="#exampleModal" >
+                                                    {{user}}
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Message </h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          </div>
+                                          <div class="modal-body">
+                                          <form action="{% url 'chat' %}" method="POST" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                      
+                                              <input type="hidden" name="receiver_id" value="{{ user.id}}">
+                                      
+                                          <div class="form-group">
+                                              <textarea class="form-control form-control" name="message" id="textarea" cols="30" rows="3" placeholder="Message...."></textarea>
+                                          </div>
+                                                          
+                                          </div>
+                                          <div class="modal-footer">
+                                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-success">Envoyez </button>
+                                          </div>
+                                      </form>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  <!-- modal -->
+
+
+
+                              {% endfor %}
+                              <!-- Fin du  -->
+
+                            </div>
+                          </div>
+
+                        {% endfor %} 
+
+
+                    </div>
+                    <!-- Fin table 3 -->
+                  
+                </div> 
+                 
+            </div>
+            <!-- Fin du section à 6 col  -->
+
+            <!-- Debut du section à 3 col  -->
+            <div class="col-md-4 mt-4">
+
+
+              <!-- Debut Du Formulaire De Recherche -->
+
+              <form action="{% url 'searchPro' %}" class="form-inline my-3">
+                <div class="form-row">
+                  <div class="form-group col-md-8">
+                    <input type="search" name="search" class="form-control " id="" 
+                        placeholder="Recherche Profiles">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-danger">Recherche</button>
+                  </div>  
+              </div>
+              </form>
+              
+
+              <!-- Fin Du Formulaire De Recherche -->
+
+
+                <div class="card mb-1">
+                    <div class="card-header text-center ">
+                       <p class="PTextHeader"> Plus d'infos sur la page</p>
+                    </div>
+
+                    <ul class="list-group list-group-flush text-left">
+                        <li class="list-group-item "> {% if user.association.phone_number %} 
+                            <b> {{user.association.phone_number}}</b>
+                            {% else %}
+                                Veillez remplir votre numero de telephone 
+                            {% endif %} 
+                        </li>
+                        <li class="list-group-item">{% if user.association.domaine_dactivite %} 
+                            <b>{{user.association.domaine_dactivite}}</b>
+                            {% else %}
+                                Veillez remplir votre domaine d'activite 
+                            {% endif %} 
+                        </li>
+                        <li class="list-group-item">{% if user.association.address %} 
+                            <b>{{user.association.address}}</b>
+                            {% else %}
+                                Veillez remplir Votre adresse 
+                            {% endif %} 
+                        </li>
+                        <li class="list-group-item">{% if user.association.site_web %} 
+                            <b>{{user.association.site_web}}</b>
+                            {% else %}
+                                Veillez remplir l'adresse de votre site web
+                            {% endif %} 
+                        </li>
+
+                    </ul>
+
+                    <div class="card-body">{% if user.association.description %} 
+                            {{user.association.description}}
+                        {% else %}
+                        Veillez decrire votre association
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer text-muted text-center">
+                        <a href="{% url 'editpageAss' %}" class="btn-sm btn-danger ">
+                            Mise à jour
+                        </a>  
+                    </div>
+                  </div>
+
+                  <!-- Debut du deuxieme card pour creer des posts -->
+                  <div class="card " >
+                    <ul class="list-group list-group-flush text-center">
+                      <li class="list-group-item">
+                        <a href=" {% url 'add-annonce' %} "  class="text-dark">
+                            Ajoutez une annonce
+                        </a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href=" {% url 'addxamxam' %} "  class="text-dark">
+                            Xamleul
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Fin du deuxieme card pour creer des posts -->
+
+            </div>
+            <!-- Fin du section à 3 col  -->
+
+
+        </div>
+    </div>
+    
+    
+
+{% endblock content %}
+{% block script %}
+  <script src="{% static 'JS/postfeeds.js' %}  "></script>
+{% endblock script %}

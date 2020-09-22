@@ -1,0 +1,22 @@
+body
+{
+    background-color: #F1F1F1;
+}
+
+.main
+{
+    background-image: url("/static/IMG/background.jpeg/");
+    height: 300px;
+}
+.mainedi{
+    background-color: #F1F1F1;
+    height: 300px;
+
+}
+
+.card
+{
+    border-radius: none;
+}
+
+

@@ -1,0 +1,38 @@
+body
+{
+    background-color: #F1F1F1;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.card_2
+{
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    transition: 0.8s all ease-in-out;
+    cursor: pointer;
+    z-index: 100;
+    
+}
+
+.card_2:hover {
+    transform: scale(1.2);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.363);
+    margin:15px;
+  }
+
+.total
+{
+    margin-top: -40px;
+}
+
+#contactForm
+{
+    margin-top: -20px;
+}

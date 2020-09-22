@@ -1,0 +1,507 @@
+body
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Debut carousel */
+.carousel-item img{
+    height:600px;
+    object-fit: cover;
+    transition: all .8s ease-in-out;
+}
+
+
+.carousel-item img:hover{
+    transform: scale(1.3);
+}
+
+/* les pointillé  */
+.carousel-indicators li {
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    background-color: transparent;
+    border: 1px solid #fff; 
+  }
+
+.carousel-indicators .active{
+        background-color: #ed2000;
+        border-color: #ed2000;
+}
+
+.carousel-caption{
+    bottom: 150px;
+}
+
+.carousel-caption h5{
+    font-size: 80px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+    font-family: poppins;
+    font-weight: bold;
+}
+
+.carousel-caption h5 span{
+    color: #ed2000;
+}
+
+.carousel-caption p
+{
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+    font-family: poppins;
+    letter-spacing: 5px;
+    font-style: italic;
+    
+}
+
+/* Contactez-nous */
+.blog_text{
+    padding-top: 60px;
+    color: #fff;
+    font-family: merienda;
+}
+
+.blog_text h6{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.blog_text p{
+    text-align: center;
+}
+/* Fin Contactez-nous */
+
+/* Fin carousel */
+
+/* Nos parte */
+.griseD
+{
+    background-color: #F7F7F7;
+}
+
+.parte h3
+{
+    text-align: center;
+    font-size: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+    font-family: poppins;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.Dcarou .row .carousel-item
+{
+    height: 200px;
+    width: 200px;
+    margin-bottom: 20px;
+}
+.Dcarou .row .carousel-item img
+{
+    height: 100%;
+    width: 100%;
+    /* object-fit: cover; */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.parte #carouselExampleIndicators .carousel-indicators li
+{
+    margin-top: 30px;
+
+}
+
+
+/* Fin nos parte */
+.footer
+{
+    height: 260px;
+    background-color: #444;
+}
+
+.footer h3
+{
+    color:#fff;
+    text-align: center;
+    padding-top: 80px;
+}
+.copyright
+{
+    text-align: center;
+    font-weight: bold;
+    /* padding-top: 30px; */
+    color: #777;
+}
+.rouge
+{
+    font-size: 30px;
+    font-weight: bold;
+    color: #ed2000; 
+}
+/* icon */
+.icon
+{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    margin: 100px auto;
+    
+
+}
+
+.icon  ul li 
+{
+    display: inline-block;
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 50%;
+    margin: auto 20px;
+    /* box-shadow: 3px 3px 10px #aeaeae,
+                -4px -4px 10px white; */
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    transition:.5s;
+}
+
+.icon  ul li a
+{
+    color: #444;
+}
+
+.icon  ul li a:hover
+{
+    color: #fff;
+}
+.icon  ul li:hover
+{
+    box-shadow: 3px 3px 10px #aeaeae,
+        -4px -4px 10px white;
+}
+
+.icon ul li:nth-child(1):hover
+{
+    color: #eee;
+    border-radius: 50%;
+    background-color: blue;
+    transform: scale(1.6) rotate(25deg);
+}
+.icon ul li:nth-child(2):hover
+{
+    color: #eee;
+    border-radius: 50%;
+    background-color: #C82333;
+    transform: scale(1.6) rotate(25deg);
+}
+.icon ul li:nth-child(3):hover
+{
+    color: #eee;
+    border-radius: 50%;
+    background-color: #00acee;
+    transform: scale(1.6) rotate(25deg);
+}
+
+.icon ul li:nth-child(4):hover
+{
+    color: #eee;
+    border-radius: 50%;
+    background-color: #005fee;
+    transform: scale(1.6) rotate(25deg);
+}
+/* icon */
+
+
+/* navbar */
+
+.navbar-nav a 
+{
+    font-family: poppins;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.navbar-brand
+{
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: poppins;
+    letter-spacing: 5px;
+    font-style: italic;
+}
+
+/* Fin navbar */
+
+.w-100
+{
+    height: 100vh;
+}
+.titreContact
+{
+    width: 300px;
+    text-transform: uppercase;
+    margin: 0 auto 20px auto;
+    padding-bottom: 20px;
+    border-bottom: #ed2000 solid 2px;
+}
+/*  Debut feature  */
+
+/* header  */
+.device-container {
+    max-width: 325px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.iphone-mockup >.device, .iphone-mockup e>.device {
+    background-image: url('img/iphone_white.png');
+}
+.iphone-mockup {
+    position: relative;
+    width: 100%;
+    padding-bottom: 61.775701%;
+}
+
+.iphone-mockup {
+    padding-bottom: 201.76%;
+}
+
+.iphone-mockup>.device {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url("/static/IMG/macbook.png/");
+}
+
+.iphone-mockup.black>.device, .iphone-mockup.black>.device, .iphone-mockup.black>.device {
+    background-image: url("/static/IMG/iphone_black.png/");
+}
+
+.iphone-mockup.white>.device, .iphone-mockup.white>.device, .iphone-mockup.white>.device {
+    background-image: url("/static/IMG/iphone_white.png/");
+}
+
+.iphone-mockup>.device>.screen, .iphone-mockup>.device>.screen {
+    top: 11.58%;
+    bottom: 11.58%;
+    left: 5.97%;
+    right: 5.97%;
+}
+
+.iphone-mockup>.device>.screen {
+    position: absolute;
+    overflow: hidden;
+}
+
+#possibilities
+{
+    background-color: #efefef;
+    padding:  60px 0;
+}
+#possibilities article
+{
+    width: 460px;
+    height: 270px;
+    float: left;
+    border-radius: 10px;
+}
+#possibilities article:first-child
+{
+    /* margin-right: 20px; */
+}
+.overlay
+{
+    background: rgba(255,255,255, 0.8);
+    height: 100%;
+    width: 40%;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.overlay-right
+{
+    background: rgba(255,255,255, 0.8);
+    height: 100%;
+    width: 40%;
+    padding: 20px;
+    border-radius: 0 10px 10px 0;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: auto;
+}
+
+
+.alignement
+{
+    margin: 0 auto;
+    
+}
+
+.heighCard
+{
+    height: 250px;
+    border-radius: 10px; 
+}
+
+
+article h4
+{
+    border-bottom:  1px solid #ddd;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#possibilities p
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.button-2
+{
+    color: #fff;
+    background-color: #ed2000;
+    padding: 6px 20px;
+    border-radius: 3px;
+}
+.button-2:hover
+{
+    color: #fff;
+    background-color: #02b8dd;
+}
+
+
+
+/* Fin du feature */
+
+.grise
+{
+    background-color: #efefef;
+}
+
+.right
+{
+
+}
+
+.baliseText
+{
+    padding: 25px;
+}
+
+/* Resposivite */
+@media only screen and (min-width: 768px) and (max-width: 991px)
+{
+    .carousel-caption h5
+    {
+        font-size: 50px;
+    }    
+
+    #dnon
+    {
+        display: none;
+    }
+
+
+    .copyright
+    {
+        margin-bottom: 20px;
+    }
+    .icon ul li  
+    {
+        margin-bottom: 15px;
+    }
+
+
+    .icon ul li:nth-child(1)  
+    {
+        margin-top: -15px;
+    }
+    .icon ul li:nth-child(2)  
+    {
+        margin-top: -15px;
+    }
+}
+
+@media only screen and (max-width: 767px){
+
+    /* 2ieme */
+    .carousel-caption
+    {
+        /* padding-bottom: 120px; */
+    }
+
+    .carousel-caption h5
+    {
+        font-size: 25px;
+    }
+
+    .carousel-caption p
+    {
+        font-size: 18px;
+    }
+
+    .carousel-caption a
+    {
+        padding: 10px 25px;
+    }
+    /* nav  */
+
+    .navbar-nav.ml-auto
+    {
+        padding-top: 50px;
+    }
+
+    .navbar-nav a 
+        {
+            font-family: poppins;
+            font-size: 15px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+    /* fin nav */
+
+
+    /* .icon  ul {
+        margin-top: -65px ;
+    } */
+
+    dl, ol, ul {
+        margin-top: -30px;
+        margin-bottom: 1rem;
+    }
+
+    #formB form
+    {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    #dnon
+    {
+        display: none;
+    }
+
+    .icon
+    {
+        margin: 40px auto;
+    }
+    
+}

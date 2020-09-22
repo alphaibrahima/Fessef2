@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'CSS/associationins.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row ">
+        <div class="col-md-3 mt-4"></div>
+
+        <div class="col-md-6 mt-4">
+            <div class="card mt">
+                <img src="https://www.fessef.fr/img/logo.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  
+                    
+                  {% include  'partials/_flash_messages.html'%}
+
+                  <!-- section du formulaire -->
+                  <form action=" {% url 'register_assoc' %} " method="POST">
+    
+                    {% csrf_token %}
+    
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" value=" {{ data.email }} " placeholder="Email" required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control"  name="username" value="{{ data.username }}" placeholder="Nom d'utilisateur" required="required">
+                    </div>
+    
+    
+                    <div class="form-group">
+                        <input type="text"class="form-control"  name="name" value="{{ data.nom }}" placeholder="Nom" required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Mots de passe" required="required">
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password2" placeholder="Confirmer votre mots de passe" required="required">
+                    </div>
+    
+                    <input type="submit" value="S'inscrire" class="btn btn-block btn-primary">
+    
+                  </form>
+
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-body  text-center">
+                    Vous avez déjà un compte ? <a href=" {% url 'login_assoc' %} ">Se connecter</a>
+                </div>
+              </div>
+
+        </div>
+
+        <div class="col-md-3 mt-4"></div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+{% endblock script %}

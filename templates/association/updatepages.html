@@ -1,0 +1,144 @@
+{% extends 'base/base.html' %}
+{% comment %} pour charger les fichier statics {% endcomment %}
+{% load static %}
+
+{% comment %} Pour inclure les fichier style "css" {% endcomment %}
+{% block css %}
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link href="{% static 'CSS/ediprofile.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'CSS/files.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% comment %} Pour inclure le contenu body {% endcomment %}
+{% block content %}
+
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+
+
+
+
+<div class="container-fluid mainedi"></div>
+
+<div class="row ">
+    <div class="col-md-12 m-auto">
+        <div class="card shadow-sm  mb-4" style="height: 90px;" >
+            {% if user.page.thumbnail %}
+            <div class="ml-4" >
+                <img  src=" {{ user.page.thumbnail.url }} " 
+                class=" img-thumbnail shadow-sm text-left  ml-4" alt="image"  width="150" height="150" 
+                style="margin-top: -65px; border : solid 5px #fff; ">
+                <a href=" {% url 'editProfile' %} " class="btn btn-primary btn-sm mt-4" style=" margin-right: 50px; float: right;">Mise à jour</a>
+            </div>
+            {% endif %}
+
+            <div class="text-center ml-4" >
+                
+            </div>
+      </div>
+  </div>
+<div class="container-fluid">
+<div class="row">
+
+    
+
+<!-- Debut Section 1 -->
+  <div class="col-md-3  mt-4 ">
+  </div>
+<!-- Fin Section 1 -->
+
+
+<!-- Debut Section 2 -->
+  <div class="col-md-6 mt-4 ">
+    <div class="card">
+        <div class="card-body text-center">
+          <b> Association : {{user.username}} </b>
+        </div>
+      </div>
+
+    <form action=" {% url 'editpageAss' %} " method="post" enctype="multipart/form-data" class="m-4 ">
+      {% csrf_token %}
+      
+      <input type="file" name="thumbnail" class="" id="thumbnail" hidden>
+      <label  for="thumbnail" id="selector" > Logo </label>
+
+  
+      <div class="form-group">
+        <input class="form-control " type="text" name="username" value="{{ user.username }}" placeholder="Username">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="text" name="domaineactivite" value="{{ user.association.domaine_dactivite   }}" placeholder="Domaine d'activite">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="email" name="email" value="{{user.email}}" placeholder="Email">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="text" name="address" value="{{user.association.address}}" placeholder="Ville">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="tel" name="tel" value="{{user.association.phone_number}}" placeholder="Telephone">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="date" name="birth_date" value="{{user.association.date_creation_association }}" placeholder="Date de Naissance">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control " type="text" name="site" value="{{user.association.site_web}}" placeholder="Votre Site Web">
+      </div>
+
+      <div class="form-group">
+        <textarea name="bio" id="bio"  rows="3"   class="form-control">{{user.association.description}}</textarea>
+      </div>
+
+      <input type="submit" value="Enregistrer" class="btn btn-block" style="background-color: #DC3545; color : #fff">
+  
+  </form>
+  </div>
+  <!-- Fin Section 2 -->
+
+
+  <!-- Debut Section 3 -->
+  <div class="col-md-3   mt-4 "> 
+  </div>
+  <!-- Fin Section 3 -->
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% comment %} Pour inclure les fichiers script "JS" {% endcomment %}
+{% block script %}
+
+<script src=" {% static 'JS/files.js' %} "></script>
+
+{% endblock script %}

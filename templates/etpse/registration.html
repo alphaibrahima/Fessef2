@@ -1,0 +1,111 @@
+{% extends "base/base.html" %}
+{% load static %} 
+
+{% block css %}
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
+<link href="{% static 'CSS/etpse.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% block content %}
+
+{% if messages %}
+    <div class="card">
+        <div class="card-body">
+            <!-- les messages d'erreurs -->
+            {% include  'partials/_flash_messages.html'%}
+        </div>
+    </div>
+{% else %}
+<div class="card" style="display: none;">
+    <div class="card-body">
+        <!-- les messages d'erreurs -->
+        {% include  'partials/_flash_messages.html'%}
+    </div>
+</div>
+{% endif %}
+
+ <div class="cont">
+     
+    <div class="form sign-in">
+
+      <h2>Connexion</h2>
+    <!-- les messages d'erreurs
+
+    {% include  'partials/_flash_messages.html'%} -->
+    <form action=" {% url 'login_etpse' %} " method="post">
+    {% csrf_token %}
+      <label>
+        <span>Nom De Votre Entreprise</span>
+        <input type="text" name="username" value="{{data.username}}">
+      </label>
+      <label>
+        <span>Mots de passe</span>
+        <input type="password" name="password">
+      </label>
+      <button class="submit" type="submit">Connexion</button>
+    </form>
+    <div class="text-center">
+      <a href=" {% url 'request-reset-email' %} " class="forgot-pass text-center">Mots de passe oublié ?</a>
+    </div>
+      <div class="social-media">
+        <ul>
+          <li><img src="{% static 'IMG/facebook.png' %}"></li>
+          <li><img src="{% static 'IMG/twitter.png' %}"></li>
+          <li><img src="{% static 'IMG/linkedin.png' %}"></li>
+          <li><img src="{% static 'IMG/instagram.png' %}"></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="sub-cont"> 
+      <div class="img">
+        <div class="img-text m-up">
+          <h2>Êtes vous nouveau?</h2>
+          <p style="width: 265px; padding-right: 25px; padding-left: 0px; text-align:center;">Inscrivez-vous beaucoup d'opportunité vous attends!</p>
+        </div>
+        <div class="img-text m-in">
+          <h2>Bonjour</h2>
+          <p >Avez-vous deja un compte? juste cliquez sur ce button on vous attend à l'interieure</p>
+        </div>
+        <div class="img-btn">
+          <span class="m-up ">Inscription</span>
+          <span class="m-in ">Connexion</span>
+        </div>
+      </div>
+      <div class="form sign-up">
+        <h2>Inscription</h2>
+
+
+        <form action=" {% url 'register_etpse' %} " method="post">
+            {% csrf_token %}
+            <label>
+                <span>Nom De Votre Entreprise</span>
+                <input type="text" name="username">
+              </label>
+              <label>
+                <span>Votre Email</span>
+                <input type="email" name="email">
+              </label>
+              <label>
+                <span>Votre Mot de Passe</span>
+                <input type="password" name="password">
+              </label>
+
+              <label>
+                <span>Confirmer Votre Mot de Passe</span>
+                <input type="password" name="password2">
+              </label>
+              <button type="submit" class="submit">Inscription</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content %}
+
+{% block script %}  
+ <script src="{% static 'JS/etpse.js' %}  "></script> 
+{% endblock script %}

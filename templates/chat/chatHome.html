@@ -1,0 +1,251 @@
+{% extends "base/base.html" %}
+
+{% load static %} 
+
+{% block css %}
+    {% if user.is_association%}
+        <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+    {% endif %}
+    <link href="{% static 'CSS/chat.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-2 "></div>
+
+        <div class="col-md-8">
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="card-title text-center text-dark" >Message(s) {{user.username}} </h4>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Debut Liste des messages -->
+        <div class="col-lg-4 col-md-4 col-sm-6">
+           
+            <div class="card mb-3 mt-4" id="div1">
+                
+                {% for msg in reception %}
+                {% if user != msg.sender %}
+                <div class="row no-gutters border-bottom ">
+
+                  <div class="col-md-4  text-center  bg-danger " >
+                    {% if msg.sender.is_company  %}  
+                    <img src="{{ msg.sender.page.thumbnail.url }}" class="card-img " alt="" style="border-radius: 50%;
+                    height: 70px; width: 70px; margin-top : 35px;">
+
+                    {% elif msg.sender.is_student   %}
+                    <a href="{% url 'inbox'  msg.sender.id%}">
+                        <img src="{{ msg.sender.profile.thumbnail.url}}" class="card-img" alt="" style="border-radius: 50%;
+                        height: 70px; width: 70px;  margin-top : 35px;">
+                    </a>
+                    {% endif %}
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title "><a href="{% url 'inbox'  msg.sender.id%}" class="text-dark"> {{ msg.sender }} </a> </h5>
+                      <p class="card-text">{{ msg.contenu |slice:":20"|safe}}</p>
+                      <p class="card-text"><small class="text-muted"> Depuis {{msg.timestamp|timesince}}</small></p>
+                    </div>
+                  </div>
+
+                </div>
+                {% endif %}
+                {% endfor %} 
+
+
+              </div>
+            <!-- Fin du card Senders  -->
+
+        </div>
+        <!-- Fin de la Liste des messages -->
+        
+ 
+   
+
+        <!-- Debut de la liste -->
+        <div class="col-lg-5 col-md-5 col-sm-6 ">
+            <!-- Debut de la Liste des messages -->
+            <div class="card  mt-4  mb-4 cardbottom">
+
+                <!-- Card header -->
+
+                <div class="card-header">
+                    {% if receiverId.is_student %}
+                    <img class="rounded-circle border border-warning  d-inline" 
+                    src="{{ receiverId.profile.thumbnail.url }} " alt="user" width="40px" height="40">
+
+                    {% elif receiverId.is_company  %}
+                    <img class="rounded-circle border  border-warning d-inline" 
+                    src="{{ receiverId.page.thumbnail.url }} " alt="user" width="40px" height="40">
+
+                    {% endif  %}
+                    <div class="text-muted font-weight-bold dropdown d-inline ml-2">
+                        {{receiverId.username}} 
+                    </div>
+                </div>
+
+                <!-- Fin card header -->
+                
+                 <div class="card-body " id="madiv">
+                    <!-- Debut des message  -->
+                     {% for msg in inbox  %} 
+
+                    <div class="row mb-2  p-2" id="madivv">
+                        
+                        {% if msg.sender.is_company and msg.sender != request.user  %}
+                        <img src="{{ msg.sender.page.thumbnail.url }}" class=" card-img ml-4 mr-2" alt="" style="border-radius: 50%;
+                        height: 60px; width: 50px; ">
+                        
+                        {% elif msg.sender.is_student and msg.sender != request.user %}
+                        <img src="{{ msg.sender.profile.thumbnail.url }}" class="card-img ml-4 mr-2" alt="" style="border-radius: 50%;
+                        height: 60px; width: 50px; ">
+                        
+                        {% endif %}
+                        
+                        {% if msg.sender == request.user %}
+                            <p class="col-md-8 bg-danger" style="border-radius: 25px; padding : 15px; float: left; " id="contenuee">
+                                {{ msg.contenu|safe }} 
+                            </p>
+                        {% else %}
+                        <p class="col-md-8 bg-light" style="border-radius: 25px; padding : 15px; float: right;" >
+                            {{ msg.contenu|safe }}
+                        </p>
+                        {% endif %}
+                    </div>
+
+                     {% endfor %} 
+                    <!-- Fin des messages -->
+                 </div>     
+
+                <div class="card-body text-center mt-4 ">  
+                    <form action="{% url 'chat' %}" method="POST" class="form-inline pb">
+                        {% csrf_token %}
+                        <input type="hidden" name="receiver_id" value="{{ receiverId.id}}" id="receveur">
+                        <div class="form-group text-center ">
+                            <textarea class="form-control form-control" name="message" id="text" cols="25" rows="1" 
+                             placeholder="Message..." ></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-danger  ml-2">
+                            <i class="fa fa-paper-plane " aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+              </div>
+            <!-- Fin de la Listes -->
+
+        </div>
+        <!-- Fin de la liste -->
+
+        
+         <!-- Debut Liste des messages -->
+        <div class="col-lg-3 col-md-3 col-sm-6">
+             <!-- Debut du card Senders -->
+            <div class="card mt-4" >
+                {% for msg in users|slice:":5"  %}
+                {% if request.user == msg.sender %}
+                <ul class="list-group list-group-flush text-left">
+                <li class="list-group-item"> Envoyé à 
+                    <a id="senderIdd" href="{% url 'inbox'  msg.reciever.id%}" class="text-dark">
+                        <b> {{ msg.reciever }} </b> 
+                    </a> 
+                   <p id="sendertt"> {{ msg.contenu |slice:":25"|safe}}...</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        Depuis {{msg.timestamp|timesince}}
+                    </small>
+                </p>
+                </li>
+            </ul>
+                {% else %}
+                    <ul class="list-group list-group-flush text-left">
+                        <li class="list-group-item"> Envoyé par 
+                            <a href="{% url 'inbox'  msg.sender.id%}" class="text-dark pg"> 
+                                <b> 
+                                    {{ msg.sender }} : {{ msg.sender.id }}
+                                </b> 
+                            </a>
+                           <p> {{ msg.contenu |slice:":25"|safe}}...</p>
+
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Depuis {{msg.timestamp|timesince}}
+                            </small>
+                        </p>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% endfor %}   
+            </div>
+            <!-- Fin du card Senders  -->
+        
+        </div>
+        <!-- Fin de la Liste des messages -->
+
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+<!-- <script src=" {% static 'JS/chat.js' %} "></script> -->
+
+
+<!-- Regarder si y'a des donnees et afficher les datas chaque 1s -->
+<!-- <script>
+    var name = "{{user.id}}";
+    var nameS = $("#receveur").val(); 
+    var nameSs = $(".pg").attr("href");
+    console.log(name);
+    console.log(nameS);
+    console.log(nameSs);
+    $(document).ready(function(){
+        
+        setInterval(function(){
+            $.ajax({
+                type    : 'GET',
+               // url     : 
+
+                success : function(response){
+                    console.log(response)
+                },
+
+                error: function(response){
+                    console.log("No DATA");
+                }
+
+            });
+
+        }, 1000);
+    })
+
+
+</script> -->
+{% endblock script %}

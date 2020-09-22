@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<br><br>
+{% if category_posts %}
+<h2>{{ cats }}<h2>
+<ul>
+
+    {% for post in category_posts %}
+        <li> <h5><a href="{% url 'annonce-datail'  post.pk %}" >{{ post.title }} -- {{ post.author }}</a><h5>
+    {{ post.category }}
+    
+  {{ post.body|slice:":200"|safe }}
+
+  <small><a href="{% url 'update-annonce'  post.pk %}" class="btn btn-success">Modifier</a></small>
+  <small> <a href="{% url 'delete-annonce'  post.pk %}" class="btn btn-danger">Suprimer</a></small></li>
+{% endfor %}
+
+</ul>
+{% else %}
+<h2>Ce category n'existe pas Encore...<h2>
+{% endif %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

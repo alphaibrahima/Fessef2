@@ -1,0 +1,68 @@
+
+    <nav class="zone ">
+        <!-- Logo de fessef -->
+        <h4>Fessef</h4>
+        <!-- formulaire de recherche -->
+        <div class="">
+            <form class="search-box" action="{% url 'search_post' %}">
+                <input class="search-txt" type="search" name="search" placeholder="Faîtes votre recherche" >
+                <a type="submit" class="search-btn" >
+                    <i class="fa fa-superpowers" aria-hidden="true"></i>
+                </a>
+            </form>
+        </div>
+
+        <!-- Barre de navigation à gauche -->
+        <ul class="main-nav">
+            <li class="text-center">
+                <a class="navtext " href="{% url 'feseul' %}">
+                    <i class="fa fa-home fa-2x text-center" aria-hidden="true"></i>
+                  <br> <p >Accueil</p> 
+                </a>
+            </li>
+
+            <li class="text-center">
+                <a class="navtext " href="{% url 'chat' %}">
+                    <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+                    <br> Messages <span class="badge badge-light">4</span>
+                </a>
+            </li>
+
+            <li class="droit text-center">
+                <a  class="dropdown-toggle navtext" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    
+                    <i class="fa fa-eye fa-2x mr-2" aria-hidden="true"></i>
+                   <br>Annonce
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item text-black-50" href="{% url 'annonce' %}">Annonces</a>
+                    <a class="dropdown-item text-black-50" href="{% url 'xamxam' %}">Xamxam</a>
+                </div>
+
+            </li>
+
+
+            <li class="droit text-center mr-4">
+                <a  class="dropdown-toggle navtext" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class = "rounded-circle text-center mr-3 " 
+                        src="{{user.profile.thumbnail.url}}" style="width: 35px; height: 35px; ">
+                    <!-- <i class="fa fa-cog fa-2x text-center mr-4" aria-hidden="true"></i> -->
+                    <br> <b>{{user.username}}</b> 
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item text-black-50" href="{% url 'profile' %}">Profils</a>
+                    <a class="dropdown-item text-black-50" href="{% url 'change_password' %}">Modifier mots de passe</a>
+                    <div class="dropdown-divider"></div>
+                    
+                    <form action=" {% url 'logout' %}" method="POST" class="dropdown-item text-black-50 text-center">
+                        {% csrf_token %}
+                        <input type="submit" value="Deconnexion" class="">
+                    </form>
+                </div>
+
+            </li>
+        </ul>
+
+    </nav>

@@ -1,0 +1,94 @@
+{% extends "base/base.html" %}
+{% load static %} 
+
+{% block css %}
+<link href="{% static 'CSS/etudiant.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="fxt-template-animation fxt-template-layout2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 fxt-bg-color">
+                    <div class="fxt-content">
+                        <div class="fxt-header">
+                            <a href="login-2.html" class="fxt-logo"><img src="https://www.fessef.fr/img/logo.jpg" alt="Fessef"></a>
+                            {% comment %} <ul class="fxt-socials">
+                                <li class="fxt-google"><a href="#" title="google"><i class="fab fa-google-plus-g"></i><span>Google +</span></a></li>                                    
+                                <li class="fxt-twitter"><a href="#" title="twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a></li>
+                                <li class="fxt-facebook"><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a></li>                                    
+                            </ul> {% endcomment %}
+                        </div>
+
+                    <!-- les messages d'erreurs -->
+                    {% include  'partials/_flash_messages.html'%}
+
+                        <div class="fxt-form">
+                            <form action=" {% url 'register' %} " method="POST">
+                            {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                        <input type="email" class="form-control" name="email" value=" {{ data.email }} " placeholder="Email" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-2">
+                                        <input type="text" class="form-control"  name="username" value="{{ data.username }}" placeholder="Pseudo" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-3">
+                                        <input type="text"class="form-control"  name="name" value="{{ data.nom }}" placeholder="Nom" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        <input type="password" class="form-control" name="password2" placeholder="Confirmer Votre Mot de Passe" required="required">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-6">
+                                        <button type="submit" class="fxt-btn-fill">Inscription</button>
+                                    </div>
+                                </div>
+                            </form>                            
+                        </div>
+                        <div class="fxt-footer">
+                            <div class="fxt-transformY-50 fxt-transition-delay-7">
+                                <p> Vous avez déjà un compte ?<a href="{% url 'login' %} " class="switcher-text text-danger">Se connecter</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 fxt-none-991 fxt-bg-img" data-bg-image="{% static 'IMG/studentsRegister.jpg' %}"></div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+{% block script %}  
+ <script src="{% static 'JS/imagesloaded.pkgd.min.js' %}  "></script> 
+ <script src="{% static 'JS/validator.min.js' %}  "></script> 
+ <script src="{% static 'JS/etudiant.js' %}  "></script> 
+{% endblock script %}

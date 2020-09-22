@@ -1,0 +1,599 @@
+
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block meta %}
+
+    <meta name="description" content="Site de mise en relation ">
+    <meta name="author" content="Fessef">
+
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
+    <meta property="og:site_name" content="Fessef" /> <!-- website name -->
+    <meta property="og:site" content="" /> <!-- lien du site-->
+    <meta property="og:title" content=""/> <!-- titre visible dans le partage d'actualite  -->
+    <meta property="og:description" content="" /> <!-- description visible dans le partage d'actualite -->
+    <meta property="og:image" content="" /> <!-- lien image, mettre une fichier jpg -->
+    <meta property="og:url" content="" /> <!-- ou rediriger  -->
+    <meta property="og:type" content="article" />
+
+
+{% endblock meta %}
+
+{% block css %}
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css">
+    <link rel="stylesheet" href="{% static 'CSS/accueil.css'' %}">
+
+{% endblock css %}
+
+
+{% block content %} 
+
+<!-- <div class="container-fluid"> -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+        <a class="navbar-brand" href="{% url 'page_asso' %}">
+            <b> Fessef </b>
+        </a>
+          <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto" style="margin-right: 50px;">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#home">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#temoignages">
+                Temoiganges
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#utilisateurs">
+                Utilisateurs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#qsn">
+                Qui sommes nous
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#conatct">
+                Contacts
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    
+    <!-- </div> -->
+
+<!-- Debut Carousel images -->
+<div id="carouselExampleCaptions " class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'IMG/pexels-buro-millennial-1438081.jpg' %}" class="d-block w-100" alt="">
+        <div class="carousel-caption ">
+          <h5>Lorem ipsum <span>fessef</span> </h5>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'IMG/pexels-christina-morillo-1181421.jpg' %}" class="d-block w-100" alt="">
+        <div class="carousel-caption ">
+          <h5>Lorem ipsum <span>fessef</span></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'IMG/pexels-pixabay-206585.jpg' %}" class="d-block w-100" alt="">
+        <div class="carousel-caption ">
+          <h5>Lorem ipsum <span>fessef</span></h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+<!-- Fin Carousel images -->
+
+
+<!-- Section feature -->
+<section id="features" class="mt-4" id="home">
+    <div class="container">
+         <!-- row-->
+        <div class="row text-center">
+        
+            <div class="col-md-12">                     
+                <h2 class="font-70" style="text-transform: uppercase;">
+                    fonctionnalites
+                </h2>
+                <p>Check out what you can do with this app theme!</p> 
+            </div>
+
+        </div>
+        <!-- end row-->
+        <br> <br>
+
+        <!-- row-->
+        <div class="row">
+
+            <div class="col-md-5 my-auto order-2">
+                    <div class="device-container">
+                        <div class="iphone-mockup white">
+                            <div class="device">
+                            <div class="screen">
+                                <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                                 <img src="{% static 'IMG/demo-screen.jpg' %}" class="img-fluid ml-4" alt="" height="300" width="300">
+                            </div>
+                            <div class="button">
+                                <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                            </div>
+                            </div>
+                        </div>
+                    </div> 
+            </div>
+
+            <div class="col-md-7 order-1">
+
+                <!-- 1st row -->
+                <div class="row text-center">
+
+                    <div class="col-md-6 mt-2">
+                        <div class="feature-item mt-4">
+                          
+                            <i class="fa fa-book fa-5x icon-color " aria-hidden="true" style="color:  #ed2000;"></i>
+                            <h3>Xamleul</h3>
+                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit, Non assume.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                            <div class="feature-item mt-4">
+                                
+                                <i class="fa fa-share fa-5x icon-color" aria-hidden="true" style="color:  #ed2000;"></i>
+                                <h3>Partage</h3>
+                                <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit, Non assume.</p>
+                            </div>
+                     </div>
+
+                </div>
+
+                <div style="margin-top: 100px;"></div>
+
+                <!-- 2nd row -->
+                 <div class="row text-center">
+
+                    <div class="col-md-6 mt-2">
+                        <div class="feature-item  mt-4">
+                            
+                            <i class="fa fa-umbrella fa-5x icon-color" aria-hidden="true" style="color:  #ed2000;"></i>
+                            <h3>Flexiblite </h3>
+                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit, Non assume.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-2">
+                        <div class="feature-item mt-4">
+                              
+                            <i class="fa fa-desktop fa-5x icon-color" aria-hidden="true" style="color:  #ed2000;"></i>
+                            <h3>Gratuit</h3>
+                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit, Non assume.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>        
+        </div>
+        <!-- end row-->
+
+    </div>    
+</section>
+<!-- fin du section feature -->
+
+
+<div class="container-fluid griseD" id="utilisateurs">
+    <div class="row ">
+        <!-- debut du 1 er div -->
+        <div class="col-md-6 text-center ">
+            <h3 class="" style="margin-top: 20%;">Etudiant</h3>
+            <p class="text-justify"> 
+                ipsum dolor sit amet consectetur adipisicing elit. Ipsam expedita nostrum minima, 
+                perferendis obcaecati, optio explicabo quaerat delectus maxime 
+                officiis omnis dicta adipisci voluptas totam alias quisquam esse quae aspernatur.
+            </p>
+            <a href="{% url 'register' %}" class="btn btn-outline-danger btn-lg">Inscription</a>
+        </div>
+   
+        <img class="col-md-6 d-none d-sm-block" src="{% static 'IMG/pexels-pixabay-206585.jpg' %}" class="img-fluid" alt="" 
+        style="height: 400px;object-fit:cover; width: 100%; padding : 0px; margin:0px">
+        <!-- fin du 1 er div -->
+        <!-- debut du 2 div -->
+        <img class="col-md-6 d-none d-sm-block" src="{% static 'IMG/pexels-pixabay-206585.jpg' %}" class="img-fluid" alt="" 
+        style="height: 400px;object-fit:cover;width: 100%; padding : 0px; margin:0px">
+         <div class="col-md-6 text-center ">
+            <h3 class="" style="margin-top: 20%;">Entreprise</h3>
+            <p class="text-justify"> 
+                ipsum dolor sit amet consectetur adipisicing elit. Ipsam expedita nostrum minima, 
+                perferendis obcaecati, optio explicabo quaerat delectus maxime 
+                officiis omnis dicta adipisci voluptas totam alias quisquam esse quae aspernatur.
+            </p>
+            <a href="{% url 'register_etpse' %}" class="btn btn-outline-danger btn-lg">Inscription</a>
+        </div>       
+        <!-- fin du 2 div -->
+        <!-- debut du 3 div -->
+        <div class="col-md-6 text-center ">
+            <h3 class="" style="margin-top: 20%;">Association</h3>
+           <p class="text-justify"> 
+               ipsum dolor sit amet consectetur adipisicing elit. Ipsam expedita nostrum minima, 
+               perferendis obcaecati, optio explicabo quaerat delectus maxime 
+               officiis omnis dicta adipisci voluptas totam alias quisquam esse quae aspernatur.
+           </p>
+           <a href="{% url 'register_assoc' %}" class="btn btn-outline-danger btn-lg mb-3">Inscription</a>
+       </div>       
+       <img class="col-md-6 d-none d-sm-block" src="{% static 'IMG/pexels-pixabay-206585.jpg' %}" class="img-fluid" alt="" 
+       style="height: 400px;object-fit:cover; width: 100%; padding : 0px; margin:0px"> 
+        <!-- fin du 3 div -->
+
+    </div>
+</div>
+<!-- Fin Section pour les trois divs -->
+
+<!-- Debut du card -->
+<div class="container-fluid pt-2 grise">
+    <div class="row ">
+        <div class="container my-4">
+            <div class="row my-4">
+                <div class="col-md-4 my-4">
+                    <hr style="border: #DC3545 solid 2px; width: 60px; float:left; ">
+                    <h4 class="mt-4" >
+                        Lorem ipsum dolor sit, amet consectetur. 
+                    </h4>
+                    <hr style="border: #DC3545 solid 2px; width: 60px; float:right; margin-top:-5px; margin-right:50px;">
+                    <p class="mt-4 text-justify" >
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, animi maiores! Sequi praesentium at fugit. 
+                        Debitis rem nam sit. Nisi maxime nam ut laboriosam quae porro numquam ea sunt possimus?
+                    </p>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+
+                        <div class="card col-md-5 shadow-sm"  style="margin-left: 30px; 
+                                            margin-bottom:8px;  border-radius : 8px">
+                            <div class="card-body">
+                            <h3 class="text-danger  " >
+                                <i class="fa fa-share " aria-hidden="true" ></i> Lorem ipsum
+                            </h3> 
+                            <p>
+                                This is some text within a card body.
+                                This is some text within a card body.
+                                This is some text within a card body.
+                            </p> 
+                            </div>
+                        </div>
+
+                        <div class="card col-md-5 shadow-sm"style="margin-left: 10px; margin-bottom:8px; 
+                                                          border-radius : 8px">
+                            <div class="card-body">
+                            <h3 class="text-danger">
+                                <i class="fa fa-apple " aria-hidden="true"></i> Lorem ipsum
+                            </h3> 
+                            <p>
+                                This is some text within a card body.
+                                This is some text within a card body.
+                                This is some text within a card body.
+                            </p> 
+                            </div>
+                        </div>
+
+                        <div class="card col-md-5 shadow-sm" style="margin-left: 10px; margin-bottom:8px; 
+                                                          border-radius : 8px">
+                            <div class="card-body">
+                            <h3 class="text-danger">
+                                <i class="fa fa-android " aria-hidden="true"></i> Lorem ipsum
+                            </h3> 
+                            <p>
+                                This is some text within a card body.
+                                This is some text within a card body.
+                                This is some text within a card body.
+                            </p> 
+                            </div>
+                        </div>
+
+                        <div class="card col-md-5 shadow-sm" style="margin-left: 10px; margin-bottom:8px; 
+                                                          border-radius : 8px">
+                            <div class="card-body">
+                            <h3 class="text-danger">
+                                <i class="fa fa-plane " aria-hidden="true"></i> Lorem ipsum
+                            </h3> 
+                            <p>
+                                This is some text within a card body.
+                                This is some text within a card body.
+                                This is some text within a card body.
+                            </p> 
+                            </div>
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin du card -->
+
+<!-- Qui somme nous -->
+<div class="container-fluid" id="qsn" style="background-color: #F8F9FA;">
+    <div class="row">
+        <div class="container" >
+            <div class="row" style="margin : 25px">
+        
+                <div class="col-md-6 mt-4">
+                    <h1 class="font-weight-bolder" style="font-size: 45px;">Qui Sommes-Nous ?</h1>
+                    <hr style="border: #DC3545 solid 2px; width: 60px; float:left; margin-top:-5px; margin-right:50px;">
+                    <p class="mt-4 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                        Modi hic deserunt ullam dignissimos repudiandae! Dolorum pariatur iste voluptates illo nulla, 
+                        neque fugiat quos! Cumque, molestias odio dolore at a molestiae!
+                    </p>
+                </div>
+                <div class="col-md-6 mt-4" >
+                    <div class="row" style="margin-top: 50px;">
+                        <img class="col-md-6 d-none d-sm-block img-fluid" src="{% static 'IMG/pexels-pixabay-206585.jpg' %}"  
+                        alt="" style="height: 200px;object-fit:cover; width: 100%; border-radius:5px;"> 
+                        <img class="col-md-6 d-none d-sm-block img-fluid" src="{% static 'IMG/pexels-pixabay-206585.jpg' %}"  
+                        alt="" style="height: 200px; width: 100%; object-fit:cover; border-radius:5px;"> 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img class=" img-fluid " src="{% static 'IMG/pexels-pixabay-206585.jpg' %}"  
+                    alt="" style="height: 300px;object-fit:cover; width: 90%; border-radius:5px;"> 
+                </div>
+                <div class="col-md-6 mt-4">
+                    <p class="mt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                        Optio architecto recusandae impedit vel libero! Perspiciatis ad asperiores esse, 
+                        quasi a reiciendis animi quod eligendi laudantium at corrupti tempore unde eaque.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fin du qui somme nous -->
+
+<!-- debut du div des trois cards -->
+<div class="container-fluid  grise " id="temoignages">
+    <div class="row ">
+        <div class="col-md-12 text-center">
+          <h2 class="mt-4" style="font-size: 35px; text-transform: uppercase; font-weight:700; 
+              letter-spacing: 5px; font-family: poppins; font-style: italic;">
+              Temoignages..
+          </h2>
+        </div>
+      
+        <div class="col-md-8 alignement" >
+          <div class="card shadow-sm my-3 heighCard" id="etudiants"  
+          style="background-image: url(/static/IMG/pexels-pixabay-206585.jpg/); border : none;">
+              <div class="overlay ">
+                  <h4 class="mt-4">Etudiants</h4>
+                  <p><small>Offrez le meilleur à ceux que vous aimez et partagez des moments 
+                      fabuleux Avec Vos Amis Etudiants woowww !!!</small></p>
+                  <a href="#" class="button-2">Continuez... </a>
+              </div>
+          </div>
+  
+          <div class="card shadow-sm my-3 ml-4 heighCard right" id="entreprises"
+            style="background-image: url(/static/IMG/pexels-pixabay-206585.jpg/); border : none;">
+                <div class="overlay-right ">
+                    <h4 class="mt-4">Entreprise</h4>
+                    <p><small>Offrez le meilleur à ceux que vous aimez et partagez des moments 
+                        fabuleux Avec Vos Amis Etudiants woowww !!!</small></p>
+                    <a href="#" class="button-2">Continuez... </a>
+                </div>
+          </div>
+  
+          <div class="card shadow-sm my-3 mr-4 heighCard" id="association"
+              style="background-image: url(/static/IMG/pexels-pixabay-206585.jpg/); border : none;">
+                  <div class="overlay ">
+                      <h4 class="mt-4">Association</h4>
+                      <p><small>Offrez le meilleur à ceux que vous aimez et partagez des moments 
+                          fabuleux Avec Vos Amis Etudiants woowww !!!</small></p>
+                      <a href="#" class="button-2">Continuez... </a>
+                  </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- Fin du card -->
+  
+  <!-- Debut Section pour les trois divs -->
+
+<!-- div pour temoignage -->
+
+<!-- fin div pour temoignage -->
+
+<!-- formulaires de contact -->
+<div class="row my-2" id="conatct">
+    <div class="col-md-3"></div>
+    <div class="col-md-6  my-2" id="formB">
+        <h3 class="text-center my-2 titreContact">Contactez-nous</h3>
+        <form >
+            <div class="form-row">
+              <div class="form-group col-md-6 ">
+                <label for="inputEmail4">Nom</label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Nom">
+              </div>
+              <div class="form-group col-md-6 ">
+                <label for="inputPassword4">Prenom</label>
+                <input type="text" class="form-control" id="inputPassword4" placeholder="Prenom">
+              </div>
+            </div>
+            <div class="form-group ">
+              <label for="inputAddress">Email</label>
+              <input type="email" class="form-control" id="inputAddress" placeholder="Email">
+            </div>
+         
+            <div class="form-group ">
+                <textarea name="message" class="form-control" id="" cols="30" rows="10" placeholder="Message..."></textarea>
+                
+              </div>
+        
+        
+            <button type="submit" class="btn btn-danger">Envoyer</button>
+          </form>
+        
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<!-- fin formulaires de contact -->
+
+<!-- NOS PARTENAIRES -->
+<div class="container-fluid griseD">
+    <div class="row m-auto">
+        <div class="col-md-2"></div> 
+        <div class="col-md-8 parte">
+            <h3>NOS PARTENAIRES </h3>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                </ol>
+                <div class="carousel-inner Dcarou m-auto">
+                    <div class="row m-auto">
+                        <div class="carousel-item active col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo1.png' %}" alt="First slide">
+                        </div>
+                        <div class="carousel-item active col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo2.png' %}" alt="First slide">
+                        </div>
+                        <div class="carousel-item active col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo3.png' %}" alt="First slide">
+                        </div>
+                        <div class="carousel-item col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo4.jpg' %}" alt="Second slide">
+                        </div>
+                        <div class="carousel-item col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo5.png' %}" alt="Third slide">
+                        </div>
+                        <div class="carousel-item col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo6.jpg' %}" alt="Third slide">
+                        </div>
+                        <div class="carousel-item active col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo1.png' %}" alt="First slide">
+                        </div>
+                        <div class="carousel-item col-md-3">
+                            <img class="d-block w-100" src="{% static 'IMG/logo4.jpg' %}" alt="Second slide">
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon dcolor" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon dcolor" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<!-- FIN NOS PARTENAIRES -->
+
+<!-- Footer -->
+<div class="conatainer-fluid">
+    <div class="row footer">
+        <div class="col-md-4">
+            <h3>Fessef<span class="rouge">.</span></h3>
+            <div class="copyright">Copyright © Tous droits réservés.</div>
+        </div>
+        <div class="col-md-5 col-sm-8 ">
+            <div class="icon">
+                <ul>
+                    <li>
+                        <a href="https://web.facebook.com/fessef.fr/?_rdc=1&_rdr" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:fessef.france@gmail.com" target="_blank">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/fesseffrance?lang=fr" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/fessef-france-033639141/?originalSubdomain=fr" target="_blank">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="col-md-3" id="dnon">
+            <div class="blog_text">
+                <h6 class="">Contactez nous sur :</h6>
+                <p class="">
+                    33-854-03-33 <br>
+                    77-569-23-85 <br>
+                    communication@fessef.com <br>
+                    fessef.france@gmail.com
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+
+{% endblock content %}
+
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                interval: 4000
+            });
+        
+            $('.carousel').carousel('cycle');
+
+            //Défilement fluide sur les liens HTML vers les ancres
+            $("a[href*='#']:not([href='#'])").click(function() {
+                if (
+                    location.hostname == this.hostname
+                    && this.pathname.replace(/^\//,"") == location.pathname.replace(/^\//,"")
+                ) {
+                    var anchor = $(this.hash);
+                    anchor = anchor.length ? anchor : $("[name=" + this.hash.slice(1) +"]");
+                    if ( anchor.length ) {
+                        $("html, body").animate( { scrollTop: anchor.offset().top }, 1500);
+                    }
+                }
+            });
+        
+
+        });
+    </script>
+{% endblock script %}

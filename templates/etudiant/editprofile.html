@@ -1,0 +1,136 @@
+{% extends 'base/base.html' %}
+{% comment %} pour charger les fichier statics {% endcomment %}
+{% load static %}
+
+{% comment %} Pour inclure les fichier style "css" {% endcomment %}
+{% block css %}
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link href="{% static 'CSS/profile.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'CSS/files.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% comment %} Pour inclure le contenu body {% endcomment %}
+{% block content %}
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<div class="container-fluid main"></div>
+
+<div class="row ">
+    <div class="col-md-12 m-auto">
+        <div class="card shadow-sm  mb-4" style="height: 90px;" >
+            {% if user.profile.thumbnail %}
+            <div class="ml-4" >
+                <img  src=" {{ user.profile.thumbnail.url }} " class=" img-thumbnail shadow-sm text-left  ml-4" alt="image"  width="200" height="200" style="margin-top: -20px; border : solid 5px #fff; ">
+                <a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm mt-4" style=" margin-right: 50px; float: right;">Mise à jour</a>
+            </div>
+            {% endif %}
+
+            <div class="text-center ml-4" >
+                
+            </div>
+      </div>
+  </div>
+<div class="container-fluid mb-4">
+
+<div class="row">
+
+  <div class="col-md-3  mt-4 ">
+
+  </div>
+
+  <div class="col-md-6 mt-4 ">
+
+
+    <form action=" {% url 'editProfile' %} " method="post" enctype="multipart/form-data" class="mt-4 ">
+      {% csrf_token %}
+
+      <input type="file" name="thumbnail" class="" id="thumbnail" hidden>
+      <label  for="thumbnail" id="selector">Votre photo profils </label>
+
+    
+      <div class="form-group">
+        <input class="form-control " type="text" name="username" value="{{ user.username }}" placeholder="Username">
+      </div>
+    
+
+      <div class="form-group">
+        <input class="form-control " type="email" name="email" value="{{user.email}}" placeholder="Email">
+      </div>
+
+      <div class="form-row">
+          <div class="form-group col-md-6">
+            <input class="form-control " type="text" name="name" value="{{user.name}}" placeholder="Nom">
+          </div>
+
+        <div class="form-group col-md-6">
+          <input class="form-control " type="text" name="ville" value="{{user.profile.ville}}" placeholder="Ville">
+        </div>
+    </div>
+    
+      <div class="form-group">
+        <input class="form-control " type="tel" name="tel" value="{{user.profile.phone_number}}" placeholder="Telephone">
+      </div>
+    
+      <div class="form-group">
+        <input class="form-control " type="date" name="birth_date" value="{{user.profile.birth_date}}" placeholder="Date de Naissance">
+      </div>
+    
+      <div class="form-group">
+        <input class="form-control " type="text" name="linkedin" value="{{user.profile.linkedin}}" placeholder="Votre page linkedin">
+      </div>
+    
+    
+        <div class="form-group ">
+            <input type="file"name="cv" value="{{user.profile.cv}}"  id="curiculum" hidden>
+            <label  for="curiculum" id="selector2">Votre Cv</label>
+        </div>
+
+        <div class="form-group ">
+            <input type="file" name="lm" value="{{user.profile.lm}}" id="lm"  hidden>
+            <label  for="lm" id="lettre">Votre lettre de motivation</label>
+        </div>
+
+
+    
+      <div class="form-group">
+        <textarea name="bio"  class="form-control" rows="3" id="bio" >{{user.profile.bio}} </textarea>
+      </div>
+    
+      <input type="submit" value="Enregistrer" class="btn btn-block btn-danger form-control">
+    
+  </form>
+
+
+  </div>
+
+  <div class="col-md-3   mt-4 ">
+    
+  </div>
+
+</div>
+
+</div>
+
+
+
+{% endblock content %}
+
+{% comment %} Pour inclure les fichiers script "JS" {% endcomment %}
+{% block script %}
+  <script src="{% static 'JS/editprofil.js' %}  "></script>
+  <script src=" {% static 'JS/files.js' %} "></script>
+  <script src=" {% static 'JS/file2.js' %} "></script>
+  <script src=" {% static 'JS/file3.js' %} "></script>
+{% endblock script %}

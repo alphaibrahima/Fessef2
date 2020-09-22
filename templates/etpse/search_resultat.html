@@ -1,0 +1,78 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+  <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<!-- debut du nveau design -->
+<div class="container">
+    <div class="row">
+        <!-- Card resultat -->
+        <div class="col-md-12 mt-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                {% if posts.count == 1 %}
+                  <h4 class="card-title text-center text-dark" >Resultat</h4>
+                {% else %}
+                  <h4 class="card-title text-center text-dark" >Resultat(s)</h4>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Fin du barre de resultat -->
+        <div class="col-md-2 mt-4 mb-4"></div>
+        <div class="col-md-8 mt-4 mb-4">
+            <!-- debut du card resultat du recherche -->
+            {% for i in posts %}
+            <div class="card mr-4 mb-3 shadow-sm" >
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="{{ i.img_une.url }}" class="card-img img-fluid pimg" alt="{{ i.title }}"
+                    style="width: 100%; height : 100%">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <a class="text-dark" href="{% url 'annonce-datail'  i.pk %}" >
+                      <h5 class="card-title">{{ i.title }}</h5>
+                    </a>
+                      <p class="card-text">
+                        {{ i.body|slice:":160"|safe }}
+                        <a class="text-dark" href="{% url 'annonce-datail'  i.pk %}" style="margin-left: -5px;">
+                        .....
+                        </a>
+                      </p>
+                      <p class="card-text"><small class="text-muted">Depuis {{i.timestamp|timesince}}</small></p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {% endfor%} 
+            <!-- Fin du barre de recherche -->
+        </div>
+        <div class="col-md-2 mt-4 mb-4"></div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+{% endblock script %}

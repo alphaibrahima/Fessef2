@@ -1,0 +1,17 @@
+.card-infoImgg
+{
+    height: 350px;
+    object-fit: cover;
+}
+.card-infoImg
+{
+    height: 250px;
+    object-fit: cover;
+}
+
+
+.pimg
+{
+    object-fit: cover;  
+}
+

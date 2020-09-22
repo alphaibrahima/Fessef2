@@ -1,0 +1,152 @@
+{% extends "base/base.html" %}
+{% load static %} 
+{% block css %}
+    <link href="{% static 'CSS/profile.css' %}" rel="stylesheet" type="text/css">
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+
+{% block content %}
+{% comment %} Menu {% endcomment %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+{% include  'partials/_flash_messages.html'%}
+
+
+
+<div class="container-fluid main "></div>
+
+<div class="row ">
+    <div class="col-md-12 m-auto">
+        <div class="card shadow-sm  mb-4" style="height: 90px;" >
+            {% if user.profile.thumbnail %}
+            <div class="ml-4" >
+                <img  src=" {{ user.profile.thumbnail.url }} " class=" img-thumbnail shadow-sm text-left  ml-4" 
+                  alt="image"  width="200" height="200" style="margin-top: -20px; border : solid 5px #fff; ">
+                <a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm mt-4" style=" margin-right: 50px; float: right;">Mise à jour</a>
+            </div>
+            {% endif %}
+
+            <div class="text-center ml-4" >
+                
+            </div>
+            </div>
+          </div>
+
+
+
+          <div class="col-md-4 mt-4 ">
+            <div class="card mr-2 ml-4 mb-3 mt-4  shadow-sm" >
+                <div class="card-body">
+                  <h5 class="card-title">{{user.username}} {{profile.id}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{user.profile.ville}}</h6>
+                  
+                  <p class="card-text"><strong>Email : </strong> {{user.email}} </p>
+                  <p class="card-text"><strong>Phone : </strong> {{user.profile.phone_number}} </p>
+                  <p class="card-text"><strong>Date de naissance : </strong> {{user.profile.birth_date}}</p>
+                  <p class="card-text"><strong>Bio : </strong> {{user.profile.bio}}</p>
+                  <div class="text-center"><a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm">Mise à jour</a></div> 
+                </div>
+              </div>
+        </div>
+            
+                  
+               
+
+            <div class="col-md-5 mt-4">
+                <div class="row">
+
+                   <div class="col-md-12">
+                        {% for i in posts %}
+                        <div class="card mb-3 mt-4" id="{{i.id}}" >
+                            <div class="card-header" style="height: 55px; padding : 5px">
+                                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
+                                    <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
+                                   
+                                    <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h mt-3 text-secondary "></i></a>  
+                                    <!-- debut du list dropdown -->
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">Delete</a>
+                                        <a class="dropdown-item" href="#">Signalez</a>
+                                    </div>
+                                    
+                                    <!-- fin du list -->
+                                    <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
+                            </div>
+            
+                            {% if i.thumbnail.url %}
+                            <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg " alt="...">
+                            {% endif %}
+                            <div class="card-body">
+                              <p class="card-text">{{i.contenu}}</p>
+                            </div>
+                            <div class="card-footer text-muted text-center">
+                                <p class="text-left ml-2">{{i.timestamp.date}}
+                                <a href="{{i.get_absolute_url}}" class="float-right mr-2 text-primary" href="">Voir plus...</a></p>
+                              </div>
+                          </div>
+                          {% endfor %}
+                    </div> 
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3 mt-4">
+                <div class="card mr-4 ml-2 mb-3 mt-4" >
+                    <div class="card-body">
+                      <div class="text-center">
+                        <i class="fa fa-binoculars fa-2x text-danger" aria-hidden="true" style="font-size: 40px;"></i>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <!-- Trois derniers posts -->
+                  {% for post in postall|slice:":3"  %}
+                  <div class="card ml-2 mr-4 mb-3 " >
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img src="{{post.img_une.url }}" class="card-img img-fluid pimg" alt="" style="height: 100%;">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <a class="text-dark" href="{% url 'annonce-datail'  post.pk %}" >
+                          <h5 class="card-title">{{ post.title}}</h5>
+                        </a>
+                          <p class="card-text">{{ post.body|slice:":40"|safe }}</p>
+                          <p class="card-text"><small class="text-muted">Depuis {{post.timestamp|timesince}}</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+            </div>
+
+
+    </div>  
+
+    
+
+
+{% endblock content %}
+
+{% block script %}
+  <script src="{% static 'JS/postfeeds.js' %}  "></script>
+{% endblock script %}

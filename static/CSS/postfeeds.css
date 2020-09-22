@@ -1,0 +1,22 @@
+.prrouge
+{
+    height: 30px;
+    width: 100%;
+    background-color: red;
+}
+
+.raduis-card
+{
+    border-radius: 20px;
+}
+
+div.card-body.bg-danger
+{
+    background-color: #FF0000;
+}
+
+.margin-d
+{
+    margin: 10px;
+}
+

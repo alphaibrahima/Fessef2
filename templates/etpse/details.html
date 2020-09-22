@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+{% if user.is_association%}
+  <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+{% else %}
+  <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+{% endif %}
+<link href="{% static 'CSS/home.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-2">
+
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card mb-3 mt-4" id="{{post.id}}" >
+            <div class="card-header" style="height: 55px; padding : 5px">
+                {% if post.author.is_company %}
+                <img class="rounded-circle border border-warning d-inline" src="{{ post.author.page.thumbnail.url }} " 
+                alt="user" width="40px" height="40px">
+                {% elif post.author.is_association %}
+                <img class="rounded-circle border border-warning d-inline" src="{{ post.author.association.thumbnail.url }} " 
+                alt="user" width="40px" height="40px">
+                {% endif %}
+                <div class="text-muted  d-inline ">By : {{ post.author }} </small></div>
+                   
+                <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h mt-3 text-secondary "></i></a>  
+                <!-- debut du list dropdown -->
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if request.user == post.author %}
+                    <a class="dropdown-item text-danger  delete" href=" {% url 'delete-annonce'  post.pk %}" id="{{post.id}}">Delete</a>
+                    <a class="dropdown-item" href="{% url 'update-annonce'  post.pk %}">Modifier</a>
+                    {% endif %}
+                    <a class="dropdown-item" href="#">Signalez</a>
+                </div>
+                    
+                <!-- fin du list -->
+                <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{post.timestamp|timesince}}</small> </p>      
+            </div>
+            {% if post.img_une %}
+            <img src="{{post.img_une.url}}" class="card-img-top" alt="{{ post.title }}">
+            {% endif %}
+
+            <div class="card-body ">
+                <h5 class="card-title text-center">
+                    <strong>{{ post.title }}</strong>
+                </h5>
+              <p class="card-text ">{{ post.body|safe }}</p>
+            </div>
+            <div class="card-footer text-muted text-center">
+                <p class="float-left d-inline  ml-2">{{post.timestamp.date}}</p>
+
+                <p class="text-center d-inline ml-2">
+                    
+                    <form id="contactForm" action=" {% url 'like_post' post.pk %} " method="POST">
+                        {% csrf_token %}
+                    {% if user.is_student %}
+                        {% if liked %}
+                            <button type = "submit", name="post_id", value = " {{ post.id}} " class="btn btn-danger " >
+                            Annulez
+                            </button>
+                        {% else %}
+                            <button type = "submit", name="post_id", value = " {{ post.id}} " class="btn btn-primary " >
+                            Postulez
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center d-inline ml-2"> 
+                            <button disabled="disabled" name="post_id", value = " {{ post.id}} " class="btn btn-primary " >Postulez</button> 
+                        </p>
+                    {% endif %}
+                        </form>
+                   
+
+
+                </p>
+                <p class="float-right d-inline mr-2 total"  >{{post.likes.count}}</p>
+
+
+              </div>
+          </div>
+
+          <!-- Debut card pour voir les personnes qui sont interrest du post-->
+          {% if request.user == post.author %}
+          {% for i in post.likes.all %}
+          <div class="card my-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{i.profile.thumbnail.url}}" class="card-img img-fluid " alt="annonce-job"
+                        style="width: 50px; height : 50px; border-radius : 50%">
+                        <p>
+                            <a class=" btn btn-sm btn-danger text-white m-2"  data-toggle="modal" data-target="#exampleModal" >
+                                {{i}}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-footer text-muted text-center">
+                Nombre de vue(s) ({{post.views}})
+            </div>
+            
+          </div>
+
+        <!-- modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Message </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <form action="{% url 'chat' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+            
+                    <input type="hidden" name="receiver_id" value="{{ i.id}}">
+            
+                <div class="form-group">
+                    <textarea class="form-control form-control" name="message" id="textarea" cols="30" rows="3" placeholder="Message...."></textarea>
+                </div>
+                                
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Envoyez </button>
+                </div>
+            </form>
+            </div>
+            </div>
+        </div>
+        <!-- modal -->
+
+        {% endfor %}
+        {% endif %}
+
+        <!-- Fin card stat -->
+
+        </div>
+
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+{% block script %}
+    <script src="{% static 'JS/postfeeds.js' %}  "></script>
+    {% comment %} <script src="{% static 'JS/postuleAjax.js' %}  "></script> {% endcomment %}
+{% endblock script %}
+
+
+
+
