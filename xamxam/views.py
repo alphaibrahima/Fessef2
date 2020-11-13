@@ -3,7 +3,24 @@ from django.views.generic import( ListView,
                 CreateView, UpdateView, DeleteView)
 from django.urls import reverse_lazy, reverse
 from .forms import XamxamForm, UpdateForm
-from .models import Xamxam
+from taggit.models import Tag
+from .models import Xamxam, Category
+
+
+
+
+def Taggedd(request, slug):
+    tag                 = get_object_or_404(Tag, slug=slug)
+    posts               = Xamxam.objects.filter(tags = tag)
+    common_Tags         = Xamxam.tags.most_common()[:10]
+    context             = {
+        'tag'         : tag,
+        'posts'       : posts,
+        'common_Tags' : common_Tags
+    }
+    return render(request, 'xamxam/xamaxam.html', context)
+
+
 
 
 # fonction pour Ajouter un post xamxam
@@ -33,7 +50,7 @@ class XamxamView(ListView):
     model = Xamxam
     template_name = 'xamxam/xamaxam.html'
     ordering = ['-timestamp']
-    context_object_name = 'xamaAll'
+    context_object_name = 'posts'
 
     
 
@@ -48,6 +65,15 @@ def XamxaDetailView(request, id):
     }
 
     return render(request, 'xamxam/xamDetails.html', context)
+
+
+#categori
+def category(request, slug):
+    category = Category.objects.get(slug=slug)
+    context = {
+        'category' : category
+    }
+    return render(request, 'xamxam/category.html', context)
 
 
 

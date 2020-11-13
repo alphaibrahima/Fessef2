@@ -1,12 +1,12 @@
 label
 {
     padding: 5px 40px;
-    border: 3px solid #DC3545;
+    border: 3px solid #3563a9;
     border-radius: 48px;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
-    color: #DC3545;
+    color: #3563a9;
     transition: all .5s;
 }
 
@@ -16,7 +16,7 @@ label:hover{
 
 label.active
 {
-    background-color: #DC3545;
+    background-color: #3563a9;
     color: #fff;
 }
 

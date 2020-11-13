@@ -1,0 +1,31 @@
+<!-- modal CV-->
+<div class="modal fade" id="cvPdf-{{ user_like.id  }}" tabindex="-1" aria-labelledby="cvLabel-{{ user_like.id  }}" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="cvLabel-{{ user_like.id  }}">Curriculum vitæ de @{{user_like.username}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if user_like.profile.cv %}
+                    <iframe src="{{user_like.profile.cv.url }}" width="100%" height="600px">     
+                    </iframe>
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Oooooups!</h4>
+                    <p>
+                       <strong>{{user_like.username}}</strong> N'a pas mit son  <strong>CV</strong>
+                    </p>
+                  </div>
+                {% endif %}   
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+<!-- fin modal CV-->

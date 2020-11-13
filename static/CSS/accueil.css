@@ -26,8 +26,8 @@ body
   }
 
 .carousel-indicators .active{
-        background-color: #ed2000;
-        border-color: #ed2000;
+        background-color: #3563A9; 
+        border-color: #3563A9;
 }
 
 .carousel-caption{
@@ -44,7 +44,7 @@ body
 }
 
 .carousel-caption h5 span{
-    color: #ed2000;
+    color: #3563A9;
 }
 
 .carousel-caption p
@@ -142,7 +142,7 @@ body
 {
     font-size: 30px;
     font-weight: bold;
-    color: #ed2000; 
+    color: #3563A9; 
 }
 /* icon */
 .icon
@@ -198,7 +198,7 @@ body
 {
     color: #eee;
     border-radius: 50%;
-    background-color: #C82333;
+    background-color: #3563A9;
     transform: scale(1.6) rotate(25deg);
 }
 .icon ul li:nth-child(3):hover
@@ -251,7 +251,7 @@ body
     text-transform: uppercase;
     margin: 0 auto 20px auto;
     padding-bottom: 20px;
-    border-bottom: #ed2000 solid 2px;
+    border-bottom: #3563A9 solid 2px;
 }
 /*  Debut feature  */
 
@@ -377,7 +377,7 @@ article h4
 .button-2
 {
     color: #fff;
-    background-color: #ed2000;
+    background-color: #3563A9;
     padding: 6px 20px;
     border-radius: 3px;
 }

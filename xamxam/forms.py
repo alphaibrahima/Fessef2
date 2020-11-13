@@ -12,11 +12,12 @@ class XamxamForm(forms.ModelForm):
     class Meta:
 
         model = Xamxam 
-        fields = ('author', 'thumbnail', 'title',  'contenu')
+        fields = ('author', 'thumbnail', 'title', 'tags',  'contenu')
 
         widgets = {
-            'author' : forms.TextInput(attrs={'class' : 'form-control', 'value' : '', 'id' : 'username', 'type' : 'hidden' }),
-            'title' : forms.TextInput(attrs={'class' : 'form-control', 'label':'Titre :', 'placeholder': 'Entrez votre titre...'}),
+            'author'  : forms.TextInput(attrs={'class' : 'form-control', 'value' : '', 'id' : 'username', 'type' : 'hidden' }),
+            'title'   : forms.TextInput(attrs={'class' : 'form-control', 'label':'Titre :', 'placeholder': 'Entrez votre titre...'}),
+            'tags'    : forms.TextInput(attrs={'class' : 'form-control',   'type' : 'text', 'data-role' : 'tagsinput' }),
             # 'contenu' : forms.Textarea(attrs={'class' : 'form-control', 'placeholder': 'Entrez Le contenu...'}),
             'contenu' : SummernoteWidget(),
         }
@@ -25,7 +26,7 @@ class XamxamForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Xamxam 
-        fields = ('thumbnail', 'title', 'contenu')
+        fields = ('thumbnail', 'title', 'tags', 'contenu')
 
         widgets = {
             'title' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder': 'Entrez votre titre...'}),

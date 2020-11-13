@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     $(".delete").click(function(e){
         var id = this.id; //$(this).attr('id);
         var href = this.href; 
@@ -13,6 +14,8 @@ $(document).ready(function(){
     
         $("#"+id).fadeOut(1000);
     });
+
+
     
 })
 

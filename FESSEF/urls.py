@@ -20,10 +20,12 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('xamxam/', include('xamxam.urls'), name='xamxam'),
+    # path('oauth/', include('social_django.urls', namespace='social')),
     path('reporting/', include('reporting.urls'), name='reporting'),
     path('postfeeds/', include('Postfeeds.urls'), name='postfeeds'),
-    path('oauth/', include('social_django.urls', namespace='social')),
+    path('Competence/', include('Competence.urls'), name='Competence'),
     path('annonceEtpse/', include('AnnonceEtpse.urls'), name='annonceEtpse'),
+    path('notifications/', include('notifications.urls'), name='notifications'),
 
 ]
 

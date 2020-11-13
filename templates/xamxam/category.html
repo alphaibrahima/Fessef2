@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    {% if user.is_association%}
+        <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'CSS/xamaxam.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<div class="container-fluid mt-2">
+    <a href=" {% url 'addxamxam' %} "  class="btn btn-lg btn-warning m-2 ">
+        Xamleul
+    </a>
+
+    <h2 class="text-primary"> {{category.title}} </h2>
+    <div class="row my-2">
+
+        {% for post in category.posts.all %}
+        <div class="col-md-4 mb-4 resize">
+            
+            <div class="card mb-2" id="{{post.id}}">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        <a class="text-dark" href=" {% url 'Xdetails' post.id%} " style="text-decoration: none;">
+                            <strong>{{ post.title }}</strong>
+                        </a>
+                    </h5>
+
+                </div>
+                {% if post.thumbnail %}
+                    <img src="{{ post.thumbnail.url }}" class="card-img-top img-fluid card-infoImgg" alt=" {{post.author}} " 
+                    id="img_card">
+                {% endif %}
+
+                <div class="card-body">
+                    <p class="text-center text-muted">Depuis {{post.timestamp|timesince}}</p>
+                    <p class="card-text">{{ post.contenu|slice:":50"|safe }}
+                        <a class="text-dark" href=" {% url 'Xdetails' post.id%} " >...</a>
+                    </p>
+                </div>
+
+                
+                {% if request.user == post.author %}
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item">
+                        <a href="{% url 'updatexamxam' post.pk %}" class="float-left d-inline ml-2 text-warning">
+                            Modifier
+                        </a>
+
+                        <a href="{% url 'delxamxam' post.id %}" class="float-right d-inline mr-2 text-danger delete" id="{{post.id}}">
+                            Suprimer
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+                <div class="card-footer ">
+                    <p class="float-left d-inline  ml-2"><b>{{ post.author }}</b></p>
+                    <p class="float-right d-inline mr-2" ></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+        
+
+
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'JS/postfeeds.js' %}  "></script>
+{% endblock script %}

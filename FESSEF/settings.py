@@ -40,28 +40,34 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# applicatio was installed with pip
 THIRD_PARTY_APPS = [
-    # applicatio was installed with pip
     'six',
-    'ckeditor',
-    'ckeditor_uploader',
-    'social_django',
-    'tinymce',
-    'django_summernote', 
     'taggit',
+    'tinymce',
+    'ckeditor',
+    'crispy_forms',
+    'social_django',
+    'ckeditor_uploader',
+    'django_summernote', 
 ]
 
+# application was installed with django-admin
 LOCAL_APPS = [
-    # application was installed with django-admin
-    'utilisateurs',
-    'Postfeeds',
-    'AnnonceEtpse',
     'Chats',
-    'reporting',
     'xamxam',
+    'reporting',
+    'Postfeeds',
+    'Competence',
+    'AnnonceEtpse',
+    'utilisateurs',
+    'notifications',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+# template for crispy
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CKEDITOR UPLOAD
 CKEDITOR_UPLOAD_PATH = "feseul_image/"
 
@@ -104,10 +110,11 @@ TEMPLATES = [
 
 
 AUTHENTICATION_BACKENDS = (
-    # 'social_core.backends.facebook.FacebookOAuth2',
-    # 'social_core.backends.twitter.TwitterOAuth',
-    # 'social_core.backends.github.GithubOAuth2',
-
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -163,20 +170,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-STATIC_URL  = '/static/'
+# STATIC_URL  = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/' )
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static/"),
 # ]
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static')
-    ]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-#  debutconf pour Summernote
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (     
+    os.path.join(BASE_DIR, 'static/'), 
+) 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# if DEBUG:
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, 'static')
+#     ]
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Debutconf pour Summernote
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # SUMMERNOTE_THEME = 'bs4'
 # fin conf pour Summernote
@@ -191,6 +206,7 @@ MEDIA_URL = '/media/'
 # EMAIL_USE_TLS=os.environ.get('EMAIL_USE_TLS')
 # EMAIL_PORT=os.environ.get('EMAIL_PORT')
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='alphaibrahimas95@gmail.com'
 EMAIL_HOST_PASSWORD='#alphasow1995'
@@ -204,18 +220,37 @@ MESSAGE_TAGS={
 }
 
 
+SITE_ID = 1
 
+LOGIN_REDIRECT_URL        = 'feseul'
+LOGIN_URL                 = 'login'
+LOGOUT_REDIRECT_URL       = '/'
+LOGOUT_URL                = 'logout'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'feseul'
+# Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'GOOGLE_KEY'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SECRET'
 
+# Facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '361006191613077'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '97d0b117c706ca6134c8effbd9235896'  # App Secret
 
-SOCIAL_AUTH_FACEBOOK_KEY = '318805606198861'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'f6b84a6e68650c849b4ca3b6bebe32e5'  # App Secret
-
+# Twiter
 SOCIAL_AUTH_TWITTER_KEY = 'jSxY2C0Od1STCUZGxWM7cqLsn' 
 SOCIAL_AUTH_TWITTER_SECRET = 'Fri0j1ue4lB1kgqPO0SeUu0knj7B0mn6G2hWXsID6COoKk5OWK'
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '77pdiappawx8d1'       #Client ID
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = '84S0ib9BgrFvX8VO'  #Client Secret
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ['r_basicprofile', 'r_emailaddress']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = ['email-address', 'formatted-name', 'public-profile-url', 'picture-url']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [
+    ('id', 'id'),
+    ('formattedName', 'name'),
+    ('emailAddress', 'email_address'),
+    ('pictureUrl', 'picture_url'),
+    ('publicProfileUrl', 'profile_url'),
+]
 
 
 # Tinymce

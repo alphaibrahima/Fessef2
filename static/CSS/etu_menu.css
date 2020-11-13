@@ -3,7 +3,7 @@
     display: flex;
     margin: 0;
     height: 100px;
-    background-color: #DC3545;
+    background-color: #3563a9;
 }
 
 
@@ -85,7 +85,7 @@ h4
     outline: none;
     float: left;
     padding: 0;
-    color: red;
+    color: #3563a9;
     font-size: 16px;
     
     transition: 0.4s;
@@ -105,14 +105,14 @@ h4
 .search-box:hover > .search-btn
 {
    background-color: #fff;
-   color: #e84118;
+   color:#3563a9;
    margin-left: -40px;
 }
 
 /* Boutton  */
 .search-btn
 {
-    color: #e84118;
+    color: #3563a9;
     float: right;
     width: 40px;
     height: 40px;

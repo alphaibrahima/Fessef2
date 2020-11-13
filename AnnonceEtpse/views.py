@@ -13,9 +13,9 @@ from django.db.models import Q
 
 
 def Tagged(request, slug):
-    tag = get_object_or_404(Tag, slug=slug)
-    posts = Post.objects.filter(tags = tag)
-    common_Tags         = Post.tags.most_common()[:10]
+    tag               = get_object_or_404(Tag, slug=slug)
+    posts             = Post.objects.filter(tags = tag)
+    common_Tags       = Post.tags.most_common()[:10]
     context = {
         'tag'         : tag,
         'posts'       : posts,

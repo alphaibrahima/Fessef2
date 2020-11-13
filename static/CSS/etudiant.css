@@ -250,13 +250,13 @@ body {
     background-color: #3dc5f3;
   }
   .fxt-template-layout2 ul.fxt-socials li.fxt-google a {
-    background-color: #CC3333;
+    background-color: #3563a9;
   }
   .fxt-template-layout2 ul.fxt-socials li.fxt-google a i {
-    background-color: #db4437;
+    background-color: #3563a9;
   }
   .fxt-template-layout2 ul.fxt-socials li.fxt-google a:hover {
-    background-color: #e75042;
+    background-color: #3563a9;
   }
   .fxt-template-layout2 .fxt-form .form-group {
     position: relative;
@@ -357,7 +357,7 @@ body {
     border: 0;
     color: #fff;
     border-radius: 3px;
-    background-color: #ff0000;
+    background-color: #3563a9;
     padding: 10px 36px;
     margin-bottom: 10px;
     width: 100%;
@@ -366,8 +366,8 @@ body {
     transition: all 0.3s ease-in-out;
   }
   .fxt-template-layout2 .fxt-btn-fill:hover {
-    background-color: #da0000;
-    border-color: #da0000;
+    background-color: #3563a9;
+    border-color: #3563a9;
   }
   .fxt-template-layout2 .fxt-btn-fill:focus {
     outline: none;

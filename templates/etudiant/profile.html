@@ -2,24 +2,36 @@
 {% load static %} 
 {% block css %}
     <link href="{% static 'CSS/profile.css' %}" rel="stylesheet" type="text/css">
-{% if user.is_association%}
+{% if request.user.is_association%}
   <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
 {% else %}
   <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
 {% endif %}
 <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
 <link rel="stylesheet" href="{% static 'CSS/cardImg.css' %}">
+<style>
+  #bleblanc{
+    background-color: #3563a9;
+    color: #fff;
+  }
+
+  .rougeblanc{
+    background-color: red;
+    color: #fff;
+  }
+</style>
+
 {% endblock css %}
 
 {% block content %}
 {% comment %} Menu {% endcomment %}
 
 <!-- debut des menu -->
-{% if user.is_student %}
+{% if request.user.is_student %}
     {% include 'partials/_etu_menu.html' %}
-{% elif user.is_company %}
+{% elif request.user.is_company %}
     {% include 'partials/_etpse_menu.html' %}
-{% elif user.is_association %}
+{% elif request.user.is_association %}
     {% include 'partials/_Association_Menu.html' %}
 {% endif %}
 <!-- debut des menu -->
@@ -31,122 +43,329 @@
 <div class="container-fluid main "></div>
 
 <div class="row ">
-    <div class="col-md-12 m-auto">
-        <div class="card shadow-sm  mb-4" style="height: 90px;" >
-            {% if user.profile.thumbnail %}
-            <div class="ml-4" >
-                <img  src=" {{ user.profile.thumbnail.url }} " class=" img-thumbnail shadow-sm text-left  ml-4" 
-                  alt="image"  width="200" height="200" style="margin-top: -20px; border : solid 5px #fff; ">
-                <a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm mt-4" style=" margin-right: 50px; float: right;">Mise à jour</a>
-            </div>
-            {% endif %}
+  <div class="col-md-12 mb-4">
+    <div class="card shadow-sm " style="height: 90px; margin-bottom:25px;" >
+      {% if user.profile.thumbnail %}
+      <div class="ml-4 mb-4" >
+          <img  src=" {{ user.profile.thumbnail.url }} " class=" img-thumbnail shadow-sm text-left  ml-4" 
+              alt="image"  width="150" height="150" style="margin-top: -20px; border : solid 5px #fff; ">
+          <a href=" {% url 'editProfile' %} " class="btn btn-sm mt-4" style=" margin-right: 50px; float: right; background-color: #3563a9; color:#fff;">Mise à jour</a>
+      </div>
+      {% endif %}
 
-            <div class="text-center ml-4" >
-                
-            </div>
+      <div class="text-center ml-4" >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3 mt-3 ">
+  
+      <div class="accordion mb-3 mt-4 ml-4 shadow-sm" id="accordionExample" style=" border-radius: 15px;">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                PROFILE INFOS
+              </button>
+            </h2>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body mt-4">
+              <h5 class="card-title"><strong>{{user.username}}</strong></h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{user.profile.ville}}</h6>
+                  
+              <p class="card-text"><strong>Email : </strong> {{user.email}} </p>
+              <p class="card-text"><strong>Phone : </strong> {{user.profile.phone_number}} </p>
+              <p class="card-text"><strong>Date de naissance : </strong> {{user.profile.birth_date}}</p>
+              <p class="card-text"><strong>Genre : </strong> {{user.profile.genre}}</p>
+              <p class="card-text"><strong>Bio : </strong> {{user.profile.bio}}</p>
+              <div class="text-center">
+                  <a href=" {% url 'editProfile' %} " class="btn btn-sm" id="bleblanc" >
+                     Mise à jour
+                  </a>
+              </div> 
             </div>
           </div>
+        </div>
+  
+       <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                COMPETENCES
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <!-- debuter du tableau compentences -->
+            <table class="table table-bordered bg-white" >
+              <thead>
+                <tr>
+                  <th scope="col">Compentences</th>
+                  <th scope="col">Categories</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in competences %}
+                <tr id="{{i.id}}">
+                  <td>{{i.name }}</td>
+                  <td>{{i.category }}</td>
+                  <td>
+                    <a href="" class="btn btn-sm" id="bleblanc">
+                      <i class="fa fa-pencil" aria-hidden="true" ></i>
+                    </a>
+                    <a class="btn btn-sm delete rougeblanc" href="{% url 'delcompet' i.id %} " id="{{i.id}}">
+                      <i class="fa fa-minus-circle" aria-hidden="true" ></i>
+                    </a>
+                  </td>
+                </tr>
 
+              {% endfor %}
+              </tbody>
+            </table>
+            <!-- Fin tableau compteneces -->
 
+              <!-- MODAL POUR AJOUTER  -->
+              <div class="text-center mb-4">
+                <a type="button" class="btn btn-sm m-auto" data-toggle="modal" data-target="#exampleModal-{{ I.id  }}" style="background-color: #3563a9; color:#fff;">
+                  Ajouter Competence
+                </a>
+              </div>
 
-          <div class="col-md-4 mt-4 ">
-            <div class="card mr-2 ml-4 mb-3 mt-4  shadow-sm" >
-                <div class="card-body">
-                  <h5 class="card-title">{{user.username}} {{profile.id}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{user.profile.ville}}</h6>
-                  
-                  <p class="card-text"><strong>Email : </strong> {{user.email}} </p>
-                  <p class="card-text"><strong>Phone : </strong> {{user.profile.phone_number}} </p>
-                  <p class="card-text"><strong>Date de naissance : </strong> {{user.profile.birth_date}}</p>
-                  <p class="card-text"><strong>Bio : </strong> {{user.profile.bio}}</p>
-                  <div class="text-center"><a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm">Mise à jour</a></div> 
+              <div class="modal fade" id="exampleModal-{{ I.id  }}" tabindex="-1" aria-labelledby="exampleModalLabel-{{ I.id  }}" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel-{{ I.id  }}">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{% url 'addcompete' %}" method="POST" enctype="multipart/form-data" >
+                      {% csrf_token %}
+                        
+                        <div class="form-group">
+                          <label for="compentence">Competence</label>
+                          <input type="text" class="form-control" id="compentence" name="compentence" placeholder="compentence">
+                        </div>
+                        <div class="form-group">
+                          <label for="categorie">Categories</label>
+                          <select class="form-control" id="categorie" name="categorie">
+                            
+                          </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <!-- FIN MODAL AJOUTER -->
+
+            <!-- MODAL POUR MODIFIER -->
+            <!-- fIN MODAL MODIFIER -->
+          </div>
         </div>
+      </div>
+     <!-- affichage de page de association -->
+      <div class="row mb-3 mt-4 ml-3">
+ 
+        <div id="carouselExampleIndicators d-md-block d-none" class="carousel slide container" data-ride="carousel">
+          <!-- <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol> -->
+
+          <div class="carousel-inner m-auto">
             
-                  
-               
+            <div class="carousel-item active row">
+              <div class="row">
+                {% for i in association %}
+                <div class="col-12 col-md-6">
+                  <div class="card  mb-4" style="max-height: 200px;">
+                    <div class="card-body m-auto text-center">
+                      <h5 >{{ i.user.username }}</h5>
+                      
+                      <div class="card-body m-auto">
+                        <img  src=" {{  i.user.association.thumbnail.url }} " class="rounded-circle shadow-sm " 
+                          alt="{{i.user.username}}"  width="50" height="50" style="margin-top: -35px;">
+                      </div>
 
-            <div class="col-md-5 mt-4">
-                <div class="row">
+                      <div class="card-text text-center mx-2" style="margin-top: -25px;">
+                        <p>
+                          {{ i.description }}
+                        </p>
+                      </div>
+                      <!-- collapse button -->
 
-                   <div class="col-md-12">
-                        {% for i in posts %}
-                        <div class="card mb-3 mt-4" id="{{i.id}}" >
-                            <div class="card-header" style="height: 55px; padding : 5px">
-                                    <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
-                                    <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
-                                   
-                                    <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h mt-3 text-secondary "></i></a>  
-                                    <!-- debut du list dropdown -->
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">Delete</a>
-                                        <a class="dropdown-item" href="#">Signalez</a>
-                                    </div>
-                                    
-                                    <!-- fin du list -->
-                                    <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
-                            </div>
-            
-                            {% if i.thumbnail.url %}
-                            <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg " alt="...">
-                            {% endif %}
-                            <div class="card-body">
-                              <p class="card-text">{{i.contenu}}</p>
-                            </div>
-                            <div class="card-footer text-muted text-center">
-                                <p class="text-left ml-2">{{i.timestamp.date}}
-                                <a href="{{i.get_absolute_url}}" class="float-right mr-2 text-primary" href="">Voir plus...</a></p>
-                              </div>
-                          </div>
-                          {% endfor %}
-                    </div> 
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-sm  m-2" data-toggle="modal" data-target="#exampleModal-{{i.user.id}}" 
+                        style="background-color: #3563a9; color:#fff; ">
+                        <i class="fa fa-commenting" aria-hidden="true"></i>
+                      </button>
+                      <a class=" btn btn-sm " href=" {% url 'userDetials' i.user.id %} " target="_blank" style="background-color: #3563a9; color:#fff; ">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                      </a>
+                    </div>
 
+                  </div>
                 </div>
-            </div>
+                {% endfor %}
 
-
-            <div class="col-md-3 mt-4">
-                <div class="card mr-4 ml-2 mb-3 mt-4" >
-                    <div class="card-body">
-                      <div class="text-center">
-                        <i class="fa fa-binoculars fa-2x text-danger" aria-hidden="true" style="font-size: 40px;"></i>
-                      </div>
+              <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{i.user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel-{{i.user.id}}" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel-{{i.user.id}}">{{ i.user.username }}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                          ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                   </div>
-
-
-
-                  <!-- Trois derniers posts -->
-                  {% for post in postall|slice:":3"  %}
-                  <div class="card ml-2 mr-4 mb-3 " >
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <img src="{{post.img_une.url }}" class="card-img img-fluid pimg" alt="" style="height: 100%;">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <a class="text-dark" href="{% url 'annonce-datail'  post.pk %}" >
-                          <h5 class="card-title">{{ post.title}}</h5>
-                        </a>
-                          <p class="card-text">{{ post.body|slice:":40"|safe }}</p>
-                          <p class="card-text"><small class="text-muted">Depuis {{post.timestamp|timesince}}</small></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {% endfor %}
-
+                </div>
+              </div>
+              <!-- fin modal -->
+                
+              </div>
             </div>
+            
+
+          </div>
+
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
+        </div>
+      </div>
 
 
-    </div>  
 
-    
+     <!-- affichage de page de association -->
 
+    </div>
+                  
+    <div class="col-md-4 mt-4">
+        <!-- <div class="col-md-12"> -->
+          {% for i in posts %}
+          <div class="card mb-3 mt-4" id="{{i.id}}" >
+              <div class="card-header" style="height: 55px; padding : 5px">
+                <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
+                <div class="text-muted font-weight-bold dropdown d-inline ml-2">
+                  {{i.author}} 
+                </div>                                   
+                <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h mt-3 text-secondary "></i></a>  
+                <!-- debut du list dropdown -->
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">Delete</a>
+                    <a class="dropdown-item" href="#">Signalez</a>
+                </div>                                   
+                <!-- fin du list -->
+                <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
+              </div>
+            
+              {% if i.thumbnail.url %}
+              <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg " alt="...">
+              {% endif %}
+              <div class="card-body">
+                <p class="card-text">{{i.contenu}}</p>
+              </div>
+              <div class="card-footer text-muted text-center">
+                  <p class="text-left ml-2">{{i.timestamp.date}}
+                  <a href="{{i.get_absolute_url}}" class="float-right mr-2 text-primary" href="">Voir plus...</a></p>
+              </div>
+            </div>
+            {% endfor %}
+        <!-- </div>  -->
+    </div>
+  
+  
+    <div class="col-md-3 mt-4">
+  
+      <div class="card mr-4 ml-2 mb-3 mt-4" >
+        <div class="card-body">
+          <div class="text-center">
+            <i class="fa fa-binoculars " aria-hidden="true" style="font-size: 40px; color: #3563a9;" ></i>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Trois derniers posts -->
+      {% for post in postall|slice:":3"  %}
+      <div class="card ml-2 mr-4 mb-3 " >
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="{{post.img_une.url }}" class="card-img img-fluid pimg" alt="" style="max-height: 150px; object-fit: cover;" >
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <a class="text-dark" href="{% url 'annonce-datail'  post.pk %}" >
+              <h5 class="card-title">{{ post.title}}</h5>
+            </a>
+              <p class="card-text">{{ post.body|slice:":40"|safe }}</p>
+              <p class="card-text"><small class="text-muted">Depuis {{post.timestamp|timesince}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
 
 {% endblock content %}
 
 {% block script %}
   <script src="{% static 'JS/postfeeds.js' %}  "></script>
+  <script>
+
+    $(document).ready(function(){
+
+      // PostFeeds 
+      $.ajax({
+          type    : 'GET',
+          url     : "{% url 'addcompete' %}",
+          // data    : {},
+          
+          success : function(response){
+            console.log(response.data);
+            for (key in response.data){  
+              $('#categorie').append(`
+                  <option value="${response.data[key].id}">${response.data[key].titre}</option>
+              `)
+            }
+          },
+          
+          error: function(response){
+              console.log("No DATA");
+          }
+          
+      });     
+      
+  })
+
+  </script>
 {% endblock script %}

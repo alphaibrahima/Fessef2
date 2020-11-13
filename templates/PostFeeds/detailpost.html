@@ -115,7 +115,7 @@
                         <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.profile.thumbnail.url}} " 
                         alt="{{comment.user.username}}" style="width: 70px; height: 70px">
                     {% elif  comment.user.is_company %}
-                        <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.page.thumbnail.url}} " 
+                        <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.page.thumbnail.url }} " 
                         alt="{{comment.user.username}}" style="width: 70px; height: 70px">    
                     {% elif  comment.user.is_association %}
                         <img class="rounded-circle mx-auto d-block p-2" src="{{comment.user.association.thumbnail.url}} " 
@@ -156,8 +156,16 @@
                                     <div class="row" >
                                         
                                         <div class="col-md-2 ">
+                                            {% if  comment.user.is_student %}
                                             <img class="rounded-circle mx-auto w-75 d-block p-2" src="{{reply.user.profile.thumbnail.url}} " 
                                             alt="{{reply.user.username}}" style="width: 60px; height: 60px">
+                                            {% elif  comment.user.is_company %}
+                                            <img class="rounded-circle mx-auto w-75 d-block p-2" src="{{reply.user.page.thumbnail.url}} " 
+                                            alt="{{reply.user.username}}" style="width: 60px; height: 60px">
+                                            {% elif  comment.user.is_association %}
+                                            <img class="rounded-circle mx-auto w-75 d-block p-2" src="{{reply.user.association.thumbnail.url}} " 
+                                            alt="{{reply.user.username}}" style="width: 60px; height: 60px">
+                                            {% endif %}
                                         </div>
                                         <div class="col-md-10 mt-3">
                                             <b> {{reply.user.username}} </b>
@@ -213,6 +221,7 @@
 {% block script %} 
   {% comment %} <script src="{% static 'JS/likeAjax.js' %}  "></script>    {% endcomment %}
   <script src="{% static 'JS/detailpost.js' %}  "></script> 
+
 {% endblock script %}
 
 

@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import Q
 from utilisateurs.models import *
+from notifications.models import *
 from .models import *
 
 
@@ -40,12 +41,18 @@ class MessageView(View):
             message = Message.objects.create(sender=sender__, reciever=reciever_, contenu=contenu__)
             message.save()
 
+            typeNotif_ = 3
+            # msg_  = Message.objects.get(id=message.id)
+            # print("###########################")
+            # print(msg_)
+            # print("###########################")
+            
+            notification = Notification.objects.create(sender=sender__, user=reciever_, text_preview=contenu__, notification_type=typeNotif_)
+            notification.save()
+
         # Checker si la requet est ajax 
             if request.is_ajax():
                 print(" Ajax")
-
-             
-
             return redirect('chat')
 
 
@@ -56,14 +63,19 @@ def Inbox(request, id):
 
     if userId == connected_user:
         usersMsg = Message.objects.filter(Q(sender=request.user) | Q(reciever=request.user)).order_by('timestamp')
+        usersMsg.is_seen = True
+       
     else:
         usersMsg = Message.objects.filter(Q(Q(sender=request.user) & Q(reciever=userId)) |
-        Q(Q(sender=userId) & Q(reciever=request.user))).order_by('timestamp') 
+        Q(Q(sender=userId) & Q(reciever=request.user))).order_by('timestamp')
+        usersMsg.is_seen = True
+
     
     users = Message.objects.filter( Q(sender=request.user) | Q(reciever=request.user)
         ).order_by("-timestamp")
     
     reception = Message.objects.all().order_by('-timestamp' )
+
 
     # print(userId)
 

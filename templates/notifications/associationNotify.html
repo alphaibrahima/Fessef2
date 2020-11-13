@@ -1,0 +1,44 @@
+
+{% extends "base/base.html" %}
+
+{% load static %} 
+
+{% block css %}
+    {% if user.is_association%}
+        <link href="{% static 'CSS/Associ.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'CSS/etu_menu.css' %}">
+    {% endif %}
+    <link href="{% static 'CSS/chat.css' %}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
+{% block content %}
+
+<!-- debut des menu -->
+{% if user.is_student %}
+    {% include 'partials/_etu_menu.html' %}
+{% elif user.is_company %}
+    {% include 'partials/_etpse_menu.html' %}
+{% elif user.is_association %}
+    {% include 'partials/_Association_Menu.html' %}
+{% endif %}
+<!-- debut des menu -->
+
+<h1>{{ notifications.count }}</h1>
+
+
+
+
+{% for notification in notifications %}
+
+    <p>
+       <b> {{ notification.sender }} </b>
+       {{ notification.sender.profile.genre }}
+    </p>
+
+{% endfor %}
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

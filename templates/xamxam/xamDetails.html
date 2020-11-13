@@ -65,7 +65,9 @@
                     </a>
                 </p>
                 <p class="float-right d-inline mr-2" >
-
+                    <a class="text-primary" href="{% url 'category' post.category.slug %} ">
+                        {{ post.category.title }}
+                    </a> 
                 </p>
             </div>
 

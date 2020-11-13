@@ -33,7 +33,8 @@
             {% if user.profile.thumbnail %}
             <div class="ml-4" >
                 <img  src=" {{ user.profile.thumbnail.url }} " class=" img-thumbnail shadow-sm text-left  ml-4" alt="image"  width="200" height="200" style="margin-top: -20px; border : solid 5px #fff; ">
-                <a href=" {% url 'editProfile' %} " class="btn btn-danger btn-sm mt-4" style=" margin-right: 50px; float: right;">Mise à jour</a>
+                <a href=" {% url 'editProfile' %} " class="btn  btn-sm mt-4" 
+                  style=" margin-right: 50px; float: right; background-color: #3563a9; color: #fff;">Mise à jour</a>
             </div>
             {% endif %}
 
@@ -69,6 +70,13 @@
         <input class="form-control " type="email" name="email" value="{{user.email}}" placeholder="Email">
       </div>
 
+      <div class="form-group">
+          <select class="form-control" id="genre" name = "genre">
+            <option value="Homme" {% if user.profile.genre == "Homme"%} selected="selected" {% endif %}>Homme</option>
+            <option value="Femme" {% if user.profile.genre == "Femme"%} selected="selected" {% endif %}>Femme</option>
+          </select> 
+      </div>
+
       <div class="form-row">
           <div class="form-group col-md-6">
             <input class="form-control " type="text" name="name" value="{{user.name}}" placeholder="Nom">
@@ -78,9 +86,23 @@
           <input class="form-control " type="text" name="ville" value="{{user.profile.ville}}" placeholder="Ville">
         </div>
     </div>
+
+      {% comment %} <div class="form-row">
+        <div class="form-group col-md-6">
+          <input class="form-control " type="text" name="competence" placeholder="Competence" value="{{uuser.profile.comptence.name}}" >
+        </div>
+
+        <div class="form-group col-md-6">
+          <select class="form-control" id="domaine" name = "domaine">
+            <option value="Agroalimentaire">
+              Agroalimentaire
+            </option>
+          </select> 
+        </div>
+      </div> {% endcomment %}
     
       <div class="form-group">
-        <input class="form-control " type="tel" name="tel" value="{{user.profile.phone_number}}" placeholder="Telephone">
+        <input class="form-control " type="tel" name="tel" placeholder="Telephone" value="{{user.profile.phone_number}}">
       </div>
     
       <div class="form-group">
@@ -88,19 +110,19 @@
       </div>
     
       <div class="form-group">
-        <input class="form-control " type="text" name="linkedin" value="{{user.profile.linkedin}}" placeholder="Votre page linkedin">
+        <input class="form-control " type="text" name="linkedin" placeholder="Votre page linkedin" value="{{user.profile.linkedin}}" >
       </div>
     
     
-        <div class="form-group ">
-            <input type="file"name="cv" value="{{user.profile.cv}}"  id="curiculum" hidden>
-            <label  for="curiculum" id="selector2">Votre Cv</label>
-        </div>
+      <div class="form-group ">
+          <input type="file"name="cv" value="{{user.profile.cv}}"  id="curiculum" hidden>
+          <label  for="curiculum" id="selector2">Votre Cv</label>
+      </div>
 
-        <div class="form-group ">
-            <input type="file" name="lm" value="{{user.profile.lm}}" id="lm"  hidden>
-            <label  for="lm" id="lettre">Votre lettre de motivation</label>
-        </div>
+      <div class="form-group ">
+          <input type="file" name="lm" value="{{user.profile.lm}}" id="lm"  hidden>
+          <label  for="lm" id="lettre">Votre lettre de motivation</label>
+      </div>
 
 
     
@@ -108,15 +130,16 @@
         <textarea name="bio"  class="form-control" rows="3" id="bio" >{{user.profile.bio}} </textarea>
       </div>
     
-      <input type="submit" value="Enregistrer" class="btn btn-block btn-danger form-control">
+      <input type="submit" value="Enregistrer" class="btn btn-block form-control" style="background-color: #3563a9; color: #fff">
     
   </form>
-
-
+    
   </div>
 
   <div class="col-md-3   mt-4 ">
-    
+    {% for domain in domaines %}
+      <p>{{ domain.name}}</p>
+    {% endfor %}
   </div>
 
 </div>

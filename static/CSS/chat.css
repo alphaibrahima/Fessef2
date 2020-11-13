@@ -11,17 +11,23 @@ body
  
 }
 
+#div1
+{
+    height: 800px;
+    overflow: auto;    
+}
+
+#listeMessage
+{
+
+}
+
 #madiv
 {
     height: 400px;
     overflow: auto;
 }
 
-#div1
-{
-    height: 700px;
-    overflow: auto;    
-}
 
 .pb
 {
@@ -41,10 +47,10 @@ body
     margin: 5px;
 }
 
-.pb .form-group  textarea
+.form-group  textarea
 {
     border-radius: 25px;
-    width: 70%;
+    /* width: 70%; */
 }
 
 .pb button

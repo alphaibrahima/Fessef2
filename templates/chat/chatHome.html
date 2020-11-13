@@ -13,6 +13,7 @@
 
 {% block content %}
 
+
 <!-- debut des menu -->
 {% if user.is_student %}
     {% include 'partials/_etu_menu.html' %}
@@ -47,7 +48,7 @@
         <!-- Debut Liste des messages -->
         <div class="col-lg-4 col-md-4 col-sm-6">
            
-            <div class="card mb-3 mt-4" id="div1">
+            <div class="card d-none d-sm-block  mb-3 mt-4" id="div1">
                 
                 {% for msg in reception %}
                 {% if user != msg.sender %}
@@ -55,12 +56,17 @@
 
                   <div class="col-md-4  text-center  bg-danger " >
                     {% if msg.sender.is_company  %}  
-                    <img src="{{ msg.sender.page.thumbnail.url }}" class="card-img " alt="" style="border-radius: 50%;
+                    <img src="{{ msg.sender.page.thumbnail.url }}" class="card-img  shadow-sm" alt="" style="border-radius: 50%;
                     height: 70px; width: 70px; margin-top : 35px;">
 
+                    {% elif msg.sender.is_association   %}
+                    <a href="{% url 'inbox'  msg.sender.id%}">
+                        <img src="{{ msg.sender.association.thumbnail.url}}" class="card-img shadow-sm" alt="" style="border-radius: 50%;
+                        height: 70px; width: 70px;  margin-top : 35px;">
+                    </a>
                     {% elif msg.sender.is_student   %}
                     <a href="{% url 'inbox'  msg.sender.id%}">
-                        <img src="{{ msg.sender.profile.thumbnail.url}}" class="card-img" alt="" style="border-radius: 50%;
+                        <img src="{{ msg.sender.profile.thumbnail.url}}" class="card-img shadow-sm" alt="" style="border-radius: 50%;
                         height: 70px; width: 70px;  margin-top : 35px;">
                     </a>
                     {% endif %}
@@ -91,7 +97,7 @@
         <!-- Debut de la liste -->
         <div class="col-lg-5 col-md-5 col-sm-6 ">
             <!-- Debut de la Liste des messages -->
-            <div class="card  mt-4  mb-4 cardbottom">
+            <div class="card mt-4  mb-4 cardbottom">
 
                 <!-- Card header -->
 
@@ -103,6 +109,10 @@
                     {% elif receiverId.is_company  %}
                     <img class="rounded-circle border  border-warning d-inline" 
                     src="{{ receiverId.page.thumbnail.url }} " alt="user" width="40px" height="40">
+
+                    {% elif receiverId.is_association  %}
+                    <img class="rounded-circle border  border-warning d-inline" 
+                    src="{{ receiverId.association.thumbnail.url }} " alt="user" width="40px" height="40">
 
                     {% endif  %}
                     <div class="text-muted font-weight-bold dropdown d-inline ml-2">
@@ -116,46 +126,51 @@
                     <!-- Debut des message  -->
                      {% for msg in inbox  %} 
 
-                    <div class="row mb-2  p-2" id="madivv">
-                        
-                        {% if msg.sender.is_company and msg.sender != request.user  %}
-                        <img src="{{ msg.sender.page.thumbnail.url }}" class=" card-img ml-4 mr-2" alt="" style="border-radius: 50%;
-                        height: 60px; width: 50px; ">
-                        
-                        {% elif msg.sender.is_student and msg.sender != request.user %}
-                        <img src="{{ msg.sender.profile.thumbnail.url }}" class="card-img ml-4 mr-2" alt="" style="border-radius: 50%;
-                        height: 60px; width: 50px; ">
-                        
-                        {% endif %}
-                        
-                        {% if msg.sender == request.user %}
-                            <p class="col-md-8 bg-danger" style="border-radius: 25px; padding : 15px; float: left; " id="contenuee">
-                                {{ msg.contenu|safe }} 
+                        <div class="row mb-2  p-2" id="madivv">
+                            
+                            {% if msg.sender.is_company and msg.sender != request.user  %}
+                            <img src="{{ msg.sender.page.thumbnail.url }}" class=" card-img ml-4 mr-2" alt="" style="border-radius: 50%;
+                            height: 50px; width: 50px; ">
+                            
+                            {% elif msg.sender.is_student and msg.sender != request.user %}
+                            <img src="{{ msg.sender.profile.thumbnail.url }}" class="card-img ml-4 mr-2" alt="" style="border-radius: 50%;
+                            height: 50px; width: 50px; ">
+
+                            {% elif msg.sender.is_association and msg.sender != request.user %}
+                            <img src="{{ msg.sender.association.thumbnail.url }}" class="card-img ml-4 mr-2" alt="" style="border-radius: 50%;
+                            height: 50px; width: 50px; ">
+                            
+                            {% endif %}
+                            
+                            {% if msg.sender == request.user %}
+                                <p class="col-md-8 bg-danger" style="border-radius: 25px; padding : 15px; float: left; " id="contenuee">
+                                    {{ msg.contenu|safe }} 
+                                </p>
+                            {% else %}
+                            <p class="col-md-8 bg-light" style="border-radius: 25px; padding : 15px; float: right;" >
+                                {{ msg.contenu|safe }}
                             </p>
-                        {% else %}
-                        <p class="col-md-8 bg-light" style="border-radius: 25px; padding : 15px; float: right;" >
-                            {{ msg.contenu|safe }}
-                        </p>
-                        {% endif %}
-                    </div>
+                            {% endif %}
+                        </div>
 
                      {% endfor %} 
                     <!-- Fin des messages -->
                  </div>     
 
-                <div class="card-body text-center mt-4 ">  
-                    <form action="{% url 'chat' %}" method="POST" class="form-inline pb">
+                <div class="card-footer text-center dflex mt-4">  
+                    <form action="{% url 'chat' %}" method="POST" class="form-inline ">
                         {% csrf_token %}
                         <input type="hidden" name="receiver_id" value="{{ receiverId.id}}" id="receveur">
-                        <div class="form-group text-center ">
-                            <textarea class="form-control form-control" name="message" id="text" cols="25" rows="1" 
-                             placeholder="Message..." ></textarea>
+                        <div class="form-group text-center " id="text">
+                            <textarea class="form-control" name="message"  
+                             placeholder="Message..." cols="40" rows="1"  ></textarea>
                         </div>
-                        <button type="submit" class="btn btn-danger  ml-2">
+                        <button type="submit" class="btn btn-danger ml-2">
                             <i class="fa fa-paper-plane " aria-hidden="true"></i>
                         </button>
                     </form>
                 </div>
+
               </div>
             <!-- Fin de la Listes -->
 
@@ -166,7 +181,7 @@
          <!-- Debut Liste des messages -->
         <div class="col-lg-3 col-md-3 col-sm-6">
              <!-- Debut du card Senders -->
-            <div class="card mt-4" >
+            <div class="card d-none d-sm-block mt-4" >
                 {% for msg in users|slice:":5"  %}
                 {% if request.user == msg.sender %}
                 <ul class="list-group list-group-flush text-left">
@@ -187,7 +202,7 @@
                         <li class="list-group-item"> Envoyé par 
                             <a href="{% url 'inbox'  msg.sender.id%}" class="text-dark pg"> 
                                 <b> 
-                                    {{ msg.sender }} : {{ msg.sender.id }}
+                                    {{ msg.sender }} 
                                 </b> 
                             </a>
                            <p> {{ msg.contenu |slice:":25"|safe}}...</p>

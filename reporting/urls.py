@@ -6,5 +6,5 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('reporting', login_required(ReportinView.as_view()), name='reporting'), 
+    path('reporting', ReportinView.as_view(), name='reporting'), 
 ]

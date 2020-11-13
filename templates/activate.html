@@ -1,9 +1,15 @@
+
 {% autoescape off %}
 
-Hi <h2> {{user.username}} </h2> 
+Hi 
+<h1> {{user.username}} </h1>
+<h2> {{user.email}} </h2>  
+<h3> {{user.password}} </h3> 
+<h4> {{user.profile.genre}} </h4> 
 Veillez cliquer sur ce lien pour activé votre compte
 
 http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+    
 
 
 {% endautoescape %}

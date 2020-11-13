@@ -1,0 +1,80 @@
+
+
+
+
+
+<!--  -->
+
+
+
+
+<div class="card mb-3" id="${response.data[i].id}" >
+    <div class="card-header" style="height: 55px; padding : 5px">
+        {% if i.author.is_student %}
+          <img class="rounded-circle border border-warning d-inline" src="{{ i.author.profile.thumbnail.url }} " alt="user" width="40px" height="40px">
+        {% elif i.author.is_company %}
+          <img class="rounded-circle border border-warning d-inline" src="{{ i.author.page.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+        {% elif i.author.is_association %}
+          <img class="rounded-circle border border-warning d-inline" src="{{ i.author.association.thumbnail.url }} " alt="user" width="40px" height="40px">
+
+        {% endif %}
+        <div class="text-muted font-weight-bold dropdown d-inline ml-2">{{i.author}} </div>
+            
+        <a href="" class="float-right mr-2 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-h fa-2x mt-2 text-secondary "></i></a>  
+        
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% if request.user == i.author %}
+            <a class="dropdown-item text-danger  delete" href=" {% url 'delpost' i.id %} " id="{{i.id}}">
+              Delete
+            </a>
+          {% elif request.user != i.author %}
+            <a class="dropdown-item" href="#">
+              Signalez
+            </a>
+          {% endif %}
+      </div>
+            
+      
+      <p style="margin-top: -32px;"></p> <small class="text-muted ml-5" >{{i.timestamp|timesince}}</small> </p>      
+    </div>
+
+    {% if i.thumbnail %}
+    <img src="{{i.thumbnail.url}}" class="card-img-top card-infoImg" alt="fesseul image">
+    {% endif %}
+    <div class="card-body">
+      <p class="card-text">{{i.contenu}}</p>
+    </div>
+    <div class="card-footer text-muted text-center">
+        <p class="text-left ml-2">{{i.timestamp.date}} 
+        <a href="{{i.get_absolute_url}}" class="float-right mr-2 text-primary" href="">Voir plus...</a></p>
+    </div>
+</div>
+{% endfor %}
+
+
+
+        
+            $("#display").append(`
+           
+              <div class="card" >
+
+                <div class="card-header" style="height: 55px; padding : 5px">
+             
+                <img class="rounded-circle border border-warning d-inline" src="/media/" alt="user" width="40px" height="40px">
+        
+                       
+               
+                <div class="text-muted font-weight-bold dropdown d-inline ml-2">${response.data[i].author.} </div>
+  
+                <img src="/media/${response.data[i].thumbnail}" class="card-img-top" alt="..." style="max-height: 500px; object-fit: cover;">
+                <div class="card-body">
+                  <p class="card-text">
+                    ${response.data[i].contenu}
+                  </p>
+                  <p>
+                    {{user.username}}
+                  </p>
+                </div>
+              </div>
+            `);

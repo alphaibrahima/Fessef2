@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, HttpResponse, redirect
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import View
 from django.contrib  import messages
 from django.urls import reverse
@@ -17,15 +17,15 @@ import json
 class FeseulView(View):
     def get(self, request):
         posts   = Feseul.objects.all().order_by('-timestamp' )
-        postss   = Post.objects.all().order_by('-timestamp' )
-        # liked_  = [i for i in posts if Like.objects.filter(post = i, user = request.user)]
+        postss  = Post.objects.all().order_by('-timestamp' )
         context = {
             'posts' : posts,
             'postss': postss,
-            # 'liked_post': liked_,
         }
-        # liked_post = [],
 
+        # if request.is_ajax():
+        #     print(" tesst ")
+        #     return JsonResponse({'data': list(posts.values()), 'data2': list(postss.values()),})
         return render(request, 'PostFeeds/postfeed.html', context)
     
     def post(self, request):
